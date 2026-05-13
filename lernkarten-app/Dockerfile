@@ -35,10 +35,14 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+# Pfad zur Persistenz-Datei. Sliplane mountet hier ein Volume.
+ENV LERNKARTEN_DB_PATH=/data/state.json
 
 # Nicht-Root-User für die Laufzeit.
 RUN addgroup --system --gid 1001 nodejs \
-  && adduser --system --uid 1001 nextjs
+  && adduser --system --uid 1001 nextjs \
+  && mkdir -p /data \
+  && chown -R nextjs:nodejs /data
 
 # Standalone-Output enthält den minimalen server.js + benötigte node_modules.
 # public/ und .next/static/ müssen separat hinüberkopiert werden.
@@ -47,6 +51,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
+
+# Volume-Hinweis: in Sliplane MUSS ein Persistent Volume an /data gemountet
+# werden, damit Nutzer-Accounts und Statistiken Deployments überleben.
+# Außerdem MUSS die Env Var SESSION_SECRET gesetzt sein (mind. 16 Zeichen).
+VOLUME ["/data"]
+
 EXPOSE 3000
 
 CMD ["node", "server.js"]

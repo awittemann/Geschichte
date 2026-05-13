@@ -20,6 +20,7 @@ Specs
 **/coverage
 **/build
 **/out
+**/.local-state.json
 
 # Logs und Environment
 **/*.log

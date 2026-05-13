@@ -49,7 +49,9 @@ Im **Safari**: Teilen-Button (Quadrat mit Pfeil nach oben) → „Zum Home-Bilds
 
 Sliplane baut bei jedem Push auf GitHub ein neues Docker-Image und tauscht es live aus. Das Repo enthält bereits alles dafür: `Dockerfile`, `.dockerignore` und `next.config.ts` mit `output: 'standalone'`.
 
-**Wichtig zur Persistenz:** Der Lernfortschritt liegt im **`localStorage` des Browsers**, NICHT auf dem Server. Neue Deployments tauschen nur den Container — der Fortschritt der Nutzer bleibt davon **vollständig unberührt**, solange die Domain stabil bleibt. Es ist **kein Persistent Volume nötig**.
+**Wichtig zur Persistenz:** Mit Nutzer-Accounts liegt der Lernfortschritt **auf dem Server** unter `/data/state.json`. Damit Deployments den Stand NICHT verlieren, MUSS in Sliplane ein **Persistent Volume an `/data`** gemountet sein.
+
+Zusätzlich braucht der Server eine **`SESSION_SECRET`** Env Var (mindestens 16 Zeichen), damit Session-Cookies signiert werden können. Ohne diese Variable startet die App in Production absichtlich nicht.
 
 ### Schritt 1: Repo bei GitHub anlegen
 
@@ -74,7 +76,12 @@ git push -u origin main
    - **Dockerfile path:** `lernkarten-app/Dockerfile`
    - **Build context:** `.` (also der Repo-Root — das ist die Sliplane-Voreinstellung)
    - **Port:** `3000`
-4. „Deploy" klicken. Beim ersten Build dauert es ein paar Minuten.
+4. **Persistent Volume anlegen:**
+   - In den Sliplane-Service-Einstellungen → „Volumes" → neues Volume mit Mount-Pfad `/data` (Größe 1 GB reicht).
+   - **WICHTIG:** Ohne dieses Volume gehen alle Nutzer-Accounts und Statistiken bei jedem Deployment verloren.
+5. **Environment Variables setzen:**
+   - `SESSION_SECRET` = ein zufälliger String mit mindestens 16 Zeichen (z. B. `openssl rand -hex 32`). Bei Änderung werden alle Nutzer ausgeloggt.
+6. „Deploy" klicken. Beim ersten Build dauert es ein paar Minuten.
 
 > Der Dockerfile-Pfad ist relativ zum Repo-Root. Die `COPY`-Anweisungen im Dockerfile sind so geschrieben, dass sie den `lernkarten-app/`-Unterordner aus dem Repo-Root holen. Eine `.dockerignore` liegt ebenfalls am Repo-Root und hält den Build-Kontext klein.
 
@@ -94,10 +101,13 @@ Aus dem Repo-Root (also dem Verzeichnis, das `lernkarten-app/` enthält):
 
 ```bash
 docker build -f lernkarten-app/Dockerfile -t lernkarten-app .
-docker run -p 3000:3000 lernkarten-app
+docker run -p 3000:3000 \
+  -v lernkarten-state:/data \
+  -e SESSION_SECRET="$(openssl rand -hex 32)" \
+  lernkarten-app
 ```
 
-Dann <http://localhost:3000> öffnen.
+Dann <http://localhost:3000> öffnen. Der Container schreibt Nutzer und Statistiken in das Docker-Volume `lernkarten-state` (lokal persistent über Restarts).
 
 ---
 
@@ -122,6 +132,21 @@ Alternative: GitHub-Repo erstellen, mit Vercel verbinden — jede Änderung wird
 **Reihenfolge:** Im ersten Durchlauf werden die Karten Kategorie für Kategorie in der vorgegebenen Reihenfolge gestellt (also zuerst alle Aufklärung-Karten, dann Absolutismus usw.) — so kannst du jedes Thema zusammenhängend einlernen. Sobald jede Karte einmal dran war, wiederholt die App nur noch die Karten, die du noch nicht „perfekt gewusst" hast, in zufälliger Reihenfolge.
 
 **„Karten ansehen":** Zusätzlich gibt es auf der Startseite den Punkt „Karten ansehen" — eine Blätter-Ansicht durch alle 61 Karten **ohne** Bewertungs-Druck. Frage zeigen, optional Antwort aufdecken, vor/zurück. Die Statistik (Tab „Karten") merkt sich mit einem 👁-Symbol, welche Karten du schon angeschaut hast (egal ob in der Lern- oder in der Blätter-Ansicht). Mit dem Filter „Noch nicht angesehen" siehst du sofort, was dir im Stoff noch fehlt.
+
+---
+
+## Nutzer-Accounts (Multi-User-Modus)
+
+Wenn der Server läuft (lokal mit `npm run dev` oder per Docker mit gemountetem `/data`-Volume), kannst du Konten anlegen und vergleichen.
+
+- **Oben rechts** im Header: „Anmelden" / „Nutzer" / aktueller Nutzer.
+- **„Konto anlegen"** auf der Anmelde-Seite: Name eingeben, optional Passwort. Wenn du bereits Fortschritt im Browser hast, kannst du ihn ins Konto übernehmen.
+- **Ohne Passwort** ist deine Statistik **öffentlich** — andere Nutzer können sie sehen.
+- **Mit Passwort** ist sie **privat** — nur du selbst siehst sie, andere bekommen ein 🔒-Symbol.
+- **„Nutzer"-Liste** zeigt alle angemeldeten Personen mit Streak und Lerntagen. Private Accounts sind sichtbar, aber ihre Zahlen sind verborgen.
+- **Eigenes Profil:** auf den eigenen Namen klicken → 14-Tage-Diagramm + Passwort-Verwaltung (setzen, ändern, entfernen).
+
+Die Daten werden auf dem Server unter `/data/state.json` gespeichert (siehe Sliplane-Anleitung). Lokal in der Entwicklung landet die Datei als `.local-state.json` im Projekt-Verzeichnis (gitignoriert).
 
 1. Auf der Startseite: **„Lernen starten"**.
 2. Karte zeigt eine Frage. Du überlegst dir die Antwort.

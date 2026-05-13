@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# lokale Server-Datenbank (nur in der Entwicklung)
+/.local-state.json
+
 # next.js
 /.next/
 /out/

@@ -6,6 +6,7 @@ import type {
   KartenStatus,
   LernkartenDaten,
 } from './typen';
+import { pushFortschritt } from './client/sync';
 
 export const FORTSCHRITT_KEY = 'lernkarten_fortschritt_v1';
 
@@ -53,14 +54,17 @@ export function ladeFortschritt(): Fortschritt | null {
 
 /**
  * Schreibt den Karten-Fortschritt; schluckt Fehler.
+ * Wenn ein Nutzer eingeloggt ist, wird der Stand zusätzlich an den Server gepusht.
  */
 export function speichereFortschritt(f: Fortschritt): void {
-  if (!localStorageVerfuegbar()) return;
-  try {
-    window.localStorage.setItem(FORTSCHRITT_KEY, JSON.stringify(f));
-  } catch {
-    // bewusst still
+  if (localStorageVerfuegbar()) {
+    try {
+      window.localStorage.setItem(FORTSCHRITT_KEY, JSON.stringify(f));
+    } catch {
+      // bewusst still
+    }
   }
+  pushFortschritt(f);
 }
 
 /**
@@ -68,12 +72,14 @@ export function speichereFortschritt(f: Fortschritt): void {
  * Die Statistik (`lernkarten_statistik_v1`) bleibt unangetastet.
  */
 export function loescheFortschritt(): void {
-  if (!localStorageVerfuegbar()) return;
-  try {
-    window.localStorage.removeItem(FORTSCHRITT_KEY);
-  } catch {
-    // bewusst still
+  if (localStorageVerfuegbar()) {
+    try {
+      window.localStorage.removeItem(FORTSCHRITT_KEY);
+    } catch {
+      // bewusst still
+    }
   }
+  pushFortschritt(null);
 }
 
 /**

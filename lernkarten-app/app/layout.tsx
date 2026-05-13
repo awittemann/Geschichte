@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { SitzungsProvider } from "@/lib/client/sitzung";
+import NutzerMenu from "@/components/NutzerMenu";
 
 export const metadata: Metadata = {
   title: "Lernkarten – Aufklärung & Menschenrechte",
@@ -27,7 +29,12 @@ export default function RootLayout({
   return (
     <html lang="de" className="h-full">
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 antialiased">
-        {children}
+        <SitzungsProvider>
+          <header className="safe-area-pt safe-area-px mx-auto max-w-md w-full flex items-center justify-end py-2">
+            <NutzerMenu />
+          </header>
+          {children}
+        </SitzungsProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 
 import type { Bewertung, StatistikSpeicher, TagesStatistik } from './typen';
 import { datumVorTagen, tageDazwischen } from './datum';
+import { pushStatistik } from './client/sync';
 
 export const STATISTIK_KEY = 'lernkarten_statistik_v1';
 
@@ -54,24 +55,31 @@ export function ladeStatistik(): StatistikSpeicher {
   }
 }
 
-/** JSON-Stringify + setItem; schluckt Fehler. */
+/**
+ * JSON-Stringify + setItem; schluckt Fehler.
+ * Wenn ein Nutzer eingeloggt ist, wird der Stand zusätzlich an den Server gepusht.
+ */
 export function speichereStatistik(s: StatistikSpeicher): void {
-  if (!localStorageVerfuegbar()) return;
-  try {
-    window.localStorage.setItem(STATISTIK_KEY, JSON.stringify(s));
-  } catch {
-    // bewusst still
+  if (localStorageVerfuegbar()) {
+    try {
+      window.localStorage.setItem(STATISTIK_KEY, JSON.stringify(s));
+    } catch {
+      // bewusst still
+    }
   }
+  pushStatistik(s);
 }
 
 /** Entfernt nur den Statistik-Key. */
 export function loescheStatistik(): void {
-  if (!localStorageVerfuegbar()) return;
-  try {
-    window.localStorage.removeItem(STATISTIK_KEY);
-  } catch {
-    // bewusst still
+  if (localStorageVerfuegbar()) {
+    try {
+      window.localStorage.removeItem(STATISTIK_KEY);
+    } catch {
+      // bewusst still
+    }
   }
+  pushStatistik(leereStatistik());
 }
 
 /** Erzeugt einen leeren TagesEintrag für ein Datum. */
