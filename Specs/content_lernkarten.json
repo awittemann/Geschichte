@@ -1,0 +1,286 @@
+{
+  "title": "LERNKARTEN",
+  "subtitle": "Menschenrechte & Aufklärung",
+  "info": "Karteikarten mit Frage (Vorderseite) und Antwort (Rückseite). Zum Lernen ausdrucken und durchschneiden oder zuhalten.",
+  "kategorien": [
+    {
+      "name": "1. Aufklärung – Grundbegriffe",
+      "karten": [
+        {
+          "frage": "Was ist Aufklärung nach Immanuel Kant?",
+          "antwort": "Aufklärung ist „der Ausgang des Menschen aus seiner selbstverschuldeten Unmündigkeit“. Wahlspruch: „Habe Mut, dich deines eigenen Verstandes zu bedienen!“ (Sapere aude!) – Kant, 1784."
+        },
+        {
+          "frage": "Was bedeutet „Unmündigkeit“ bei Kant?",
+          "antwort": "Unmündigkeit ist das Unvermögen, sich seines Verstandes ohne Leitung eines anderen zu bedienen."
+        },
+        {
+          "frage": "Wann ist Unmündigkeit „selbstverschuldet“?",
+          "antwort": "Wenn die Ursache nicht im Mangel des Verstandes liegt, sondern in der fehlenden Entschließung und dem fehlenden Mut, ihn ohne fremde Leitung zu gebrauchen."
+        },
+        {
+          "frage": "Welche vier Postulate (Imperative) der Aufklärung formuliert H. J. Pandel?",
+          "antwort": "1) Selbst denken, 2) Selbst sehen, 3) Selbst herrschen, 4) Selbst urteilen."
+        },
+        {
+          "frage": "Was bedeutet „Selbst denken“?",
+          "antwort": "Geistige Befreiung von Bevormundung durch kirchliche und weltliche Autoritäten. Den eigenen Verstand benutzen."
+        },
+        {
+          "frage": "Was bedeutet „Selbst sehen“?",
+          "antwort": "Wissenschaftliche Methode: Experimente durchführen, genau beobachten, Ergebnisse aufzeichnen, Gesetzmäßigkeiten der Natur aufdecken."
+        },
+        {
+          "frage": "Was bedeutet „Selbst herrschen“?",
+          "antwort": "Politische Befreiung von Unterdrückung. Modelle für die Selbstregierung statt absolutistischer Herrschaft."
+        },
+        {
+          "frage": "Was bedeutet „Selbst urteilen“?",
+          "antwort": "Moralische Urteilsfähigkeit. Der Mensch ist „von Natur aus gut“ und kann selbst zwischen Gut und Böse unterscheiden. Bruch mit der Lehre von Erbsünde und kirchlicher Buße."
+        },
+        {
+          "frage": "Was ist nach Auffassung der Aufklärer das Wesen des Menschen?",
+          "antwort": "Der Mensch ist ein vernunftgestütztes Wesen. Die Vernunft unterscheidet ihn vom Tier und begründet seine einzigartige, unveräußerliche Würde."
+        },
+        {
+          "frage": "Welche Naturrechte leiten die Aufklärer aus dem Wesen des Menschen ab?",
+          "antwort": "Unversehrtheit des Lebens, Freiheit, Eigentum, Gleichheit und Gerechtigkeit. Diese Rechte stehen jedem Menschen von Natur aus zu."
+        }
+      ]
+    },
+    {
+      "name": "2. Absolutismus und Vorgeschichte",
+      "karten": [
+        {
+          "frage": "Was war der Absolutismus?",
+          "antwort": "Herrschaftsform des 17./18. Jahrhunderts in Europa: Der Monarch hat unumschränkte („absolute“) Macht und ist selbst von Gesetzen losgelöst."
+        },
+        {
+          "frage": "Wer war der Inbegriff des absoluten Herrschers?",
+          "antwort": "Ludwig XIV. von Frankreich („Sonnenkönig“). Berühmter Ausspruch: „Ich bin der Staat“ (L'État, c'est moi)."
+        },
+        {
+          "frage": "Worauf berief sich der absolute Herrscher zur Legitimation seiner Macht?",
+          "antwort": "Auf das „Gottesgnadentum“ – die Vorstellung, von Gott unmittelbar zum Herrscher eingesetzt zu sein."
+        },
+        {
+          "frage": "Auf welchen drei Säulen beruhte die Macht Ludwigs XIV.?",
+          "antwort": "1) Hofstaat von Versailles, 2) Verwaltung, 3) Heer."
+        },
+        {
+          "frage": "Was war die Ständegesellschaft?",
+          "antwort": "Die Gesellschaft bestand aus drei Ständen: 1) Klerus (Geistliche), 2) Adel, 3) Dritter Stand (90 % der Bevölkerung). König, Geistliche und Adel herrschten, der Dritte Stand war rechtlos."
+        },
+        {
+          "frage": "Was war die Magna Charta Libertatum (1215)?",
+          "antwort": "Großer Freiheitsbrief: Der englische König musste seinen Untertanen erstmals Freiheits- und Eigentumsrechte zugestehen."
+        },
+        {
+          "frage": "Was war die Habeas-Corpus-Akte (1679)?",
+          "antwort": "Schutz der körperlichen Freiheit in England. Garantierte, dass niemand willkürlich und ohne richterliche Verfügung festgehalten und verurteilt werden durfte. Übersetzt: „Du darfst meinen Körper haben.“"
+        },
+        {
+          "frage": "Welche zwei antiken Philosophen beschäftigten sich schon mit der Vernunft als Wesensmerkmal des Menschen?",
+          "antwort": "Platon (427–347 v. Chr.) und Aristoteles (384–322 v. Chr.)."
+        },
+        {
+          "frage": "Welche Vorstellung der Bibel gilt als Vorläufer der Menschenrechte?",
+          "antwort": "Gott schuf den Menschen als sein Ebenbild. Daraus folgt: Wenn Gott frei ist, muss auch der Mensch frei sein. Vor Gott sind alle Menschen gleich."
+        },
+        {
+          "frage": "Was waren „Lesegesellschaften“?",
+          "antwort": "Vereinigungen in vielen Städten, in denen gebildete Bürger Bücher der Aufklärung gemeinsam lasen und diskutierten. Sie trugen zur Verbreitung der aufklärerischen Ideen bei."
+        }
+      ]
+    },
+    {
+      "name": "3. John Locke",
+      "karten": [
+        {
+          "frage": "Wer war John Locke und wann lebte er?",
+          "antwort": "Englischer Philosoph (1632–1704). Verfasste 1690 die „Two Treatises of Government“ („Zwei Abhandlungen über die Regierung“)."
+        },
+        {
+          "frage": "Wie charakterisiert Locke den Naturzustand?",
+          "antwort": "Zustand völliger Freiheit innerhalb der Grenzen des Naturrechts; Zustand der Gleichheit, in dem alle Gewalt gegenseitig ist; regiert durch ein natürliches Gesetz – die Vernunft."
+        },
+        {
+          "frage": "Was ist nach Locke das Naturrecht?",
+          "antwort": "Die Vernunft lehrt, dass niemand dem anderen an Leben, Besitz, Gesundheit oder Freiheit Schaden zufügen soll. Im Naturzustand liegt die Vollziehung des Naturrechts in jedermanns Hand."
+        },
+        {
+          "frage": "Warum verlässt der Mensch nach Locke den Naturzustand?",
+          "antwort": "Weil der Genuss seiner Rechte im Naturzustand sehr unsicher und ständig den Eingriffen anderer ausgesetzt ist. Er sucht Schutz vor Furcht und Gefahr."
+        },
+        {
+          "frage": "Was ist nach Locke der Zweck des Staates / der Gesellschaft?",
+          "antwort": "Der gegenseitige Schutz von Leben, Freiheiten und Vermögen („Eigentum“ im weiteren Sinn)."
+        },
+        {
+          "frage": "Welche Gewalten unterscheidet Locke und warum müssen sie getrennt sein?",
+          "antwort": "Legislative (gesetzgebend) und Exekutive (ausführend) müssen getrennt sein – wegen der menschlichen Schwäche, sich vom Gehorsam gegen die eigenen Gesetze auszunehmen."
+        },
+        {
+          "frage": "Welche Rolle hat die Legislative bei Locke?",
+          "antwort": "Sie ist die höchste Gewalt des Staates: heilig und unabänderlich in den Händen der Gemeinschaft. Sie bestimmt, wie die Macht des Staates gebraucht werden soll. Nur sie kann verpflichtende Gesetze schaffen."
+        },
+        {
+          "frage": "Wann beginnt nach Locke die Tyrannei?",
+          "antwort": "„Überall, wo das Gesetz ein Ende findet, wenn das Gesetz überschritten wird zum Schaden eines anderen, fängt die Tyrannei an.“"
+        }
+      ]
+    },
+    {
+      "name": "4. Charles de Montesquieu",
+      "karten": [
+        {
+          "frage": "Wer war Charles-Louis de Montesquieu und wann lebte er?",
+          "antwort": "Französischer Philosoph (1689–1755). Verfasste 1748 „De l'esprit des lois“ („Vom Geist der Gesetze“). Inspiration kam von einer Englandreise (1729–1731)."
+        },
+        {
+          "frage": "Was ist der Grundgedanke Montesquieus?",
+          "antwort": "Jeder Mensch, der Macht hat, wird dazu getrieben, sie zu missbrauchen. Daher muss „die Macht die Macht bremsen“."
+        },
+        {
+          "frage": "Welche drei Gewalten unterscheidet Montesquieu?",
+          "antwort": "1) Legislative (gesetzgebend), 2) Exekutive (ausführend, aus dem Völkerrecht), 3) Judikative / richterliche Befugnis (aus dem Zivilrecht)."
+        },
+        {
+          "frage": "Was macht die Legislative?",
+          "antwort": "Erlässt Gesetze, ändert oder schafft sie ab."
+        },
+        {
+          "frage": "Was macht die Exekutive?",
+          "antwort": "Stiftet Frieden oder Krieg, sendet/empfängt Botschaften, stellt die Sicherheit her, beugt Einfällen vor."
+        },
+        {
+          "frage": "Was macht die richterliche Befugnis (Judikative)?",
+          "antwort": "Bestraft Verbrechen und sitzt zu Gericht über die Streitfälle der Einzelpersonen."
+        },
+        {
+          "frage": "Was bedeutet politische Freiheit nach Montesquieu?",
+          "antwort": "Eine geistige Beruhigung, die aus der Überzeugung hervorgeht, dass jedermann von seiner Sicherheit hat. Kein Bürger darf einen anderen zu fürchten brauchen."
+        },
+        {
+          "frage": "Warum ist die Verbindung von Legislative und Exekutive gefährlich?",
+          "antwort": "Es gibt keine Freiheit: derselbe Monarch oder Senat könnte tyrannische Gesetze erlassen und tyrannisch durchführen."
+        },
+        {
+          "frage": "Warum ist die Verbindung von Richter und Legislative gefährlich?",
+          "antwort": "Die Macht über Leben und Freiheit wäre unumschränkt, denn der Richter wäre Gesetzgeber. Er könnte nach eigenen Gesetzen urteilen."
+        },
+        {
+          "frage": "Warum ist die Verbindung von Richter und Exekutive gefährlich?",
+          "antwort": "Der Richter hätte die Zwangsgewalt eines Unterdrückers, weil er das Recht selbst durchsetzen könnte."
+        },
+        {
+          "frage": "Wer übt nach Montesquieu die Legislative aus?",
+          "antwort": "Das Volk als Gesamtkörper. Da dies in großen Staaten unmöglich ist, geschieht es durch Repräsentanten (gewählte Vertreter)."
+        },
+        {
+          "frage": "Wer übt nach Montesquieu die Exekutive aus?",
+          "antwort": "Ein Monarch, weil unverzügliches Handeln nötig ist. Das ist besser, wenn es von einem als von mehreren besorgt wird."
+        }
+      ]
+    },
+    {
+      "name": "5. Jean-Jacques Rousseau",
+      "karten": [
+        {
+          "frage": "Wer war Jean-Jacques Rousseau und wann lebte er?",
+          "antwort": "Französischsprachiger Schriftsteller und Philosoph (1712–1778). Politisches Hauptwerk: „Du contrat social“ („Der Gesellschaftsvertrag“, 1762)."
+        },
+        {
+          "frage": "Welche Hauptfrage stellt Rousseau in seinem Gesellschaftsvertrag?",
+          "antwort": "Wie kann eine Gesellschaft die Person und das Vermögen jedes Einzelnen schützen, so dass jeder Einzelne dennoch nur sich selbst gehorcht und frei bleibt wie vorher?"
+        },
+        {
+          "frage": "Wie löst Rousseau diese Hauptfrage?",
+          "antwort": "Durch den Gesellschaftsvertrag: Jeder Einzelne tritt mit allen seinen Rechten in die Gesamtheit ein. Da sich jeder ganz hingibt, ist das Verhältnis für alle gleich – niemand hat ein Interesse, es einem anderen drückend zu machen."
+        },
+        {
+          "frage": "Wie lautet Rousseaus Kernformel des Gesellschaftsvertrags?",
+          "antwort": "„Jeder von uns stellt gemeinschaftlich seine Person und seine ganze Kraft unter die oberste Leitung des allgemeinen Willens, und wir nehmen jedes Mitglied als untrennbaren Teil des Ganzen auf.“"
+        },
+        {
+          "frage": "Was entsteht durch den Gesellschaftsvertrag?",
+          "antwort": "Ein geistiger Gesamtkörper – die „öffentliche Person“. Sie hat Einheit, gemeinsames Ich, Leben und Willen. Früher hieß sie „Stadt“, heute „Republik“ oder „Staatskörper“."
+        },
+        {
+          "frage": "Was ist der „Einzelwille“ bei Rousseau?",
+          "antwort": "Der besondere, individuelle Wille jedes einzelnen Menschen, der dem allgemeinen Willen zuwiderlaufen kann."
+        },
+        {
+          "frage": "Was ist der „Allgemeine Wille“ (volonté générale)?",
+          "antwort": "Der gemeinsame, auf das Gemeinwohl gerichtete Wille des Staatskörpers. Er ist die oberste Leitung im Staat."
+        },
+        {
+          "frage": "Was sagt Rousseau über jemanden, der dem allgemeinen Willen den Gehorsam verweigert?",
+          "antwort": "Er wird vom ganzen Körper dazu gezwungen – „man zwingt ihn, frei zu sein“."
+        },
+        {
+          "frage": "Welche Form der Gleichheit setzt Rousseau an die Stelle der natürlichen Ungleichheit?",
+          "antwort": "Eine sittliche und gesetzliche Gleichheit. Auch wenn Menschen an körperlicher und geistiger Kraft ungleich sind, können sie durch Übereinkunft und Recht alle gleich werden."
+        },
+        {
+          "frage": "Was bedeutet „Volkssouveränität“ bei Rousseau?",
+          "antwort": "Nicht der Monarch ist souverän, sondern das Volk. Das Volk schafft sich als Ansammlung vernünftiger Menschen auf der Grundlage freiwilliger Übereinkunft einen Staat."
+        }
+      ]
+    },
+    {
+      "name": "6. Menschenrechte heute",
+      "karten": [
+        {
+          "frage": "Was zeigt Material M1 (Wandmalerei, Ägypten 2012)?",
+          "antwort": "Den Volksaufstand gegen Hosni Mubarak (ab Januar 2011) als Teil des „Arabischen Frühlings“. Soziale Medien spielten eine zentrale Rolle bei der Dokumentation und Verbreitung von Bildern von Unrecht und Gewalt."
+        },
+        {
+          "frage": "Was zeigt Material M2 (Foto, Sudan 1993)?",
+          "antwort": "Die Folgen von Dürre und Bürgerkrieg (1983–2005) im Sudan: Hungersnot mit hunderttausenden Toten und Millionen Flüchtlingen. 2009 Anklage des IStGH gegen Präsident al-Bashir."
+        },
+        {
+          "frage": "Was zeigt Material M3 (Guantanamo, 2002)?",
+          "antwort": "Das US-Häftlingslager Guantanamo auf Kuba, in dem nach dem 11.9.2001 Gefangene ohne ordentliches Gerichtsverfahren festgehalten wurden. Rechtlosigkeit und brutale Verhörmethoden führten zu internationaler Kritik."
+        },
+        {
+          "frage": "Was zeigt Material M4 (Anna Politkowskaja, 2006)?",
+          "antwort": "Gedenkfeier für die russische Journalistin Anna Politkowskaja (geb. 1958), die nach Reportagen über den Tschetschenienkrieg am 7. Oktober 2006 vor ihrer Wohnung erschossen wurde. Steht für die Bedrohung von Presse- und Meinungsfreiheit."
+        },
+        {
+          "frage": "Was ist das Spannungsverhältnis zwischen Anspruch und Wirklichkeit der Menschenrechte?",
+          "antwort": "Menschenrechte erscheinen selbstverständlich, sind aber in Wirklichkeit ein brüchiger, stets gefährdeter Besitz. Trotz universeller Geltung werden sie weltweit täglich verletzt."
+        }
+      ]
+    },
+    {
+      "name": "7. Vergleich und Zusammenfassung",
+      "karten": [
+        {
+          "frage": "Was haben Locke, Montesquieu und Rousseau gemeinsam?",
+          "antwort": "Alle drei: 1) gehen vom Gesellschaftsvertrag aus, 2) sehen Freiheit als zentralen Wert, 3) lehnen den Absolutismus ab, 4) bauen auf Vernunft und Naturrecht auf."
+        },
+        {
+          "frage": "Was ist Lockes wichtigster Beitrag?",
+          "antwort": "Naturrechte als Zweck des Staates: Schutz von Leben, Freiheit und Eigentum. Trennung von Legislative und Exekutive."
+        },
+        {
+          "frage": "Was ist Montesquieus wichtigster Beitrag?",
+          "antwort": "Gewaltenteilung in drei Vollmachten: legislative Befugnis, exekutive Befugnis und richterliche Befugnis (Judikative). „Macht muss Macht bremsen.“"
+        },
+        {
+          "frage": "Was ist Rousseaus wichtigster Beitrag?",
+          "antwort": "Volkssouveränität: Das Volk – nicht der Monarch – ist souverän. Der „allgemeine Wille“ als oberste Leitung im Staat."
+        },
+        {
+          "frage": "Wie wirken die Ideen der Aufklärung in der heutigen Demokratie weiter?",
+          "antwort": "Naturrechte → Grundrechte (z. B. Art. 1 GG: Würde, Art. 2 GG: Freiheit). Gewaltenteilung → Verfassungsstaat. Volkssouveränität → Demokratie. Gesellschaftsvertrag → Verfassung."
+        },
+        {
+          "frage": "Was bewirkte die Aufklärung als historischer Bruch?",
+          "antwort": "Sie bewirkte einen radikalen und umfassenden Bruch mit den alten Vorstellungen. Politik und Gesellschaft änderten sich. Die Ideen verblieben nicht in den Köpfen, sondern wurden weit verbreitet und veränderten die Realität."
+        }
+      ]
+    }
+  ]
+}
