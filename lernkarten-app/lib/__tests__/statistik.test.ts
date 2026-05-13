@@ -2,15 +2,18 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   STATISTIK_KEY,
   aktualisiereBewertung,
+  anzahlAngesehen,
   berechneStreak,
   erfasseLernzeit,
   erhoeheSessionsZaehler,
   gesamtAbfragen,
   gesamtLerntage,
   holeOderErzeugeHeute,
+  istKarteAngesehen,
   ladeStatistik,
   leereStatistik,
   letzteNTage,
+  markiereKarteAngesehen,
   setzeErstenLerntagFallsNoetig,
   speichereStatistik,
 } from '@/lib/statistik';
@@ -91,19 +94,20 @@ describe('Statistik-Grundgerüst', () => {
   });
 
   it('leereStatistik & ladeStatistik bei fehlendem Speicher', () => {
-    expect(leereStatistik()).toEqual({ tage: [], ersterLerntag: null });
-    expect(ladeStatistik()).toEqual({ tage: [], ersterLerntag: null });
+    expect(leereStatistik()).toEqual({ tage: [], ersterLerntag: null, angeseheneKartenIds: [] });
+    expect(ladeStatistik()).toEqual({ tage: [], ersterLerntag: null, angeseheneKartenIds: [] });
   });
 
   it('ladeStatistik liefert leereStatistik bei korruptem JSON', () => {
     localStorage.setItem(STATISTIK_KEY, '{kaputt');
-    expect(ladeStatistik()).toEqual({ tage: [], ersterLerntag: null });
+    expect(ladeStatistik()).toEqual({ tage: [], ersterLerntag: null, angeseheneKartenIds: [] });
   });
 
   it('ladeStatistik sortiert tage aufsteigend', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-13', 1), tagMit('2026-05-11', 2), tagMit('2026-05-12', 3)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     speichereStatistik(s);
     const geladen = ladeStatistik();
@@ -127,6 +131,7 @@ describe('Statistik-Grundgerüst', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-13', 5)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     const t = holeOderErzeugeHeute(s, '2026-05-13');
     expect(t.abfragenGesamt).toBe(5);
@@ -194,6 +199,7 @@ describe('Pflichtfall 6: Streak-Berechnung', () => {
         tagMit('2026-05-13', 3),
       ],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     expect(berechneStreak(s, '2026-05-13')).toBe(3);
   });
@@ -202,6 +208,7 @@ describe('Pflichtfall 6: Streak-Berechnung', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-11', 4), tagMit('2026-05-13', 2)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     expect(berechneStreak(s, '2026-05-13')).toBe(1);
   });
@@ -210,6 +217,7 @@ describe('Pflichtfall 6: Streak-Berechnung', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-11', 2), tagMit('2026-05-12', 3)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     expect(berechneStreak(s, '2026-05-13')).toBe(0);
   });
@@ -256,6 +264,7 @@ describe('letzteNTage & Summen-Helpers', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-11', 4), tagMit('2026-05-13', 2)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     const reihe = letzteNTage(s, 3, '2026-05-13');
     expect(reihe.map((t) => t.datum)).toEqual([
@@ -280,8 +289,62 @@ describe('letzteNTage & Summen-Helpers', () => {
     const s: StatistikSpeicher = {
       tage: [tagMit('2026-05-11', 4), tagMit('2026-05-12', 0), tagMit('2026-05-13', 3)],
       ersterLerntag: '2026-05-11',
+      angeseheneKartenIds: [],
     };
     expect(gesamtAbfragen(s)).toBe(7);
     expect(gesamtLerntage(s)).toBe(2);
+  });
+});
+
+describe('Angesehene Karten', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('markiereKarteAngesehen fügt eine neue ID hinzu und ist idempotent', () => {
+    markiereKarteAngesehen('aufkl-01');
+    expect(ladeStatistik().angeseheneKartenIds).toEqual(['aufkl-01']);
+    markiereKarteAngesehen('aufkl-01');
+    expect(ladeStatistik().angeseheneKartenIds).toEqual(['aufkl-01']);
+    markiereKarteAngesehen('aufkl-02');
+    expect(ladeStatistik().angeseheneKartenIds).toEqual(['aufkl-01', 'aufkl-02']);
+  });
+
+  it('istKarteAngesehen & anzahlAngesehen funktionieren', () => {
+    const s: StatistikSpeicher = {
+      tage: [],
+      ersterLerntag: null,
+      angeseheneKartenIds: ['locke-01', 'mont-03'],
+    };
+    expect(istKarteAngesehen(s, 'locke-01')).toBe(true);
+    expect(istKarteAngesehen(s, 'mont-03')).toBe(true);
+    expect(istKarteAngesehen(s, 'rouss-01')).toBe(false);
+    expect(anzahlAngesehen(s)).toBe(2);
+  });
+
+  it('ladeStatistik migriert Legacy-Daten ohne angeseheneKartenIds zu leerem Array', () => {
+    // Statistik wie sie vor dem Feature aussah
+    localStorage.setItem(
+      STATISTIK_KEY,
+      JSON.stringify({
+        tage: [tagMit('2026-05-11', 4)],
+        ersterLerntag: '2026-05-11',
+      }),
+    );
+    const s = ladeStatistik();
+    expect(s.angeseheneKartenIds).toEqual([]);
+    expect(s.tage).toHaveLength(1);
+  });
+
+  it('Duplikate in einem korrupten Speicher werden beim Laden bereinigt', () => {
+    localStorage.setItem(
+      STATISTIK_KEY,
+      JSON.stringify({
+        tage: [],
+        ersterLerntag: null,
+        angeseheneKartenIds: ['a', 'b', 'a', 'b', 'c'],
+      }),
+    );
+    expect(ladeStatistik().angeseheneKartenIds).toEqual(['a', 'b', 'c']);
   });
 });

@@ -115,6 +115,7 @@ describe('Pflichtfall 4: Reset-Trennung Fortschritt vs. Statistik', () => {
         },
       ],
       ersterLerntag: '2026-05-13',
+      angeseheneKartenIds: ['a', 'b'],
     };
 
     speichereFortschritt(fortschritt);
@@ -152,6 +153,7 @@ describe('Pflichtfall 4: Reset-Trennung Fortschritt vs. Statistik', () => {
     const statistik: StatistikSpeicher = {
       tage: [],
       ersterLerntag: '2026-05-13',
+      angeseheneKartenIds: [],
     };
     speichereFortschritt(fortschritt);
     speichereStatistik(statistik);

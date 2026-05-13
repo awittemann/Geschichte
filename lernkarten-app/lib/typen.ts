@@ -28,6 +28,12 @@ export type TagesStatistik = {
 export type StatistikSpeicher = {
   tage: TagesStatistik[]; // aufsteigend nach Datum
   ersterLerntag: string | null;
+  /**
+   * IDs aller Karten, die der Nutzer schon einmal gesehen hat — entweder in
+   * der Lern- oder in der Blätter-Ansicht. Wird NICHT durch
+   * „Fortschritt zurücksetzen" geleert, nur durch „Statistik-Historie löschen".
+   */
+  angeseheneKartenIds: string[];
 };
 
 export type Lernkarte = {

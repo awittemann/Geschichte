@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import lernkartenDaten from '@/data/lernkarten.json';
 import type {
@@ -21,6 +21,7 @@ import {
 import {
   aktualisiereBewertung,
   erfasseLernzeit,
+  markiereKarteAngesehen,
   setzeErstenLerntagFallsNoetig,
 } from '@/lib/statistik';
 import { heutigesDatum } from '@/lib/datum';
@@ -92,6 +93,11 @@ export default function LernenSeite() {
   const aufdeckZeitRef = useRef<number | null>(null);
 
   const index = INDEX;
+
+  // Markiere die aktuelle Karte als angesehen, sobald sie auf den Bildschirm kommt.
+  useEffect(() => {
+    if (aktuelleId) markiereKarteAngesehen(aktuelleId);
+  }, [aktuelleId]);
 
   const onAntwortAnzeigen = useCallback(() => {
     if (antwortSichtbar) return;

@@ -121,6 +121,8 @@ Alternative: GitHub-Repo erstellen, mit Vercel verbinden — jede Änderung wird
 
 **Reihenfolge:** Im ersten Durchlauf werden die Karten Kategorie für Kategorie in der vorgegebenen Reihenfolge gestellt (also zuerst alle Aufklärung-Karten, dann Absolutismus usw.) — so kannst du jedes Thema zusammenhängend einlernen. Sobald jede Karte einmal dran war, wiederholt die App nur noch die Karten, die du noch nicht „perfekt gewusst" hast, in zufälliger Reihenfolge.
 
+**„Karten ansehen":** Zusätzlich gibt es auf der Startseite den Punkt „Karten ansehen" — eine Blätter-Ansicht durch alle 61 Karten **ohne** Bewertungs-Druck. Frage zeigen, optional Antwort aufdecken, vor/zurück. Die Statistik (Tab „Karten") merkt sich mit einem 👁-Symbol, welche Karten du schon angeschaut hast (egal ob in der Lern- oder in der Blätter-Ansicht). Mit dem Filter „Noch nicht angesehen" siehst du sofort, was dir im Stoff noch fehlt.
+
 1. Auf der Startseite: **„Lernen starten"**.
 2. Karte zeigt eine Frage. Du überlegst dir die Antwort.
 3. **„Antwort anzeigen"** tippen.

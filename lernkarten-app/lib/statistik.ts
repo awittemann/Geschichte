@@ -8,7 +8,7 @@ export const STATISTIK_KEY = 'lernkarten_statistik_v1';
 
 /** Leerer Initialspeicher. */
 export function leereStatistik(): StatistikSpeicher {
-  return { tage: [], ersterLerntag: null };
+  return { tage: [], ersterLerntag: null, angeseheneKartenIds: [] };
 }
 
 function localStorageVerfuegbar(): boolean {
@@ -45,6 +45,9 @@ export function ladeStatistik(): StatistikSpeicher {
     return {
       tage: sortiereTageAufsteigend(parsed.tage as TagesStatistik[]),
       ersterLerntag: parsed.ersterLerntag ?? null,
+      angeseheneKartenIds: Array.isArray(parsed.angeseheneKartenIds)
+        ? [...new Set(parsed.angeseheneKartenIds as string[])]
+        : [],
     };
   } catch {
     return leereStatistik();
@@ -243,4 +246,26 @@ export function gesamtLerntage(s: StatistikSpeicher): number {
 export function tageSeitErstemLerntag(s: StatistikSpeicher, heute: string): number {
   if (!s.ersterLerntag) return 0;
   return tageDazwischen(s.ersterLerntag, heute) + 1;
+}
+
+/**
+ * Markiert eine Karte als angesehen. Idempotent — doppelte Aufrufe ändern nichts.
+ * Persistiert über `loescheFortschritt` hinweg; wird nur durch
+ * `loescheStatistik` entfernt.
+ */
+export function markiereKarteAngesehen(kartenId: string): void {
+  const s = ladeStatistik();
+  if (s.angeseheneKartenIds.includes(kartenId)) return;
+  s.angeseheneKartenIds.push(kartenId);
+  speichereStatistik(s);
+}
+
+/** Prüft, ob eine Karte bereits angesehen wurde. */
+export function istKarteAngesehen(s: StatistikSpeicher, kartenId: string): boolean {
+  return s.angeseheneKartenIds.includes(kartenId);
+}
+
+/** Anzahl der bereits angesehenen Karten. */
+export function anzahlAngesehen(s: StatistikSpeicher): number {
+  return s.angeseheneKartenIds.length;
 }

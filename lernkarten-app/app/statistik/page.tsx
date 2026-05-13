@@ -30,7 +30,7 @@ import { useIstClient } from '@/lib/sessionStats';
 const DATEN = lernkartenDaten as LernkartenDaten;
 
 type Tab = 'verlauf' | 'karten';
-type KartenFilter = 'alle' | 'offen' | 'erledigt';
+type KartenFilter = 'alle' | 'offen' | 'erledigt' | 'nicht_angesehen';
 type KartenSortierung = 'kategorie' | 'status';
 
 type IndizierteKarte = {
@@ -120,7 +120,7 @@ export default function StatistikSeite() {
           onStatistikGeloescht={ladeAlles}
         />
       ) : (
-        <KartenTab fortschritt={fortschritt} />
+        <KartenTab fortschritt={fortschritt} statistik={statistik} />
       )}
     </main>
   );
@@ -311,7 +311,13 @@ function UebersichtsKarte({
   );
 }
 
-function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
+function KartenTab({
+  fortschritt,
+  statistik,
+}: {
+  fortschritt: Fortschritt | null;
+  statistik: StatistikSpeicher;
+}) {
   const [filter, setFilter] = useState<KartenFilter>('alle');
   const [sortierung, setSortierung] = useState<KartenSortierung>('kategorie');
   const karten = useMemo(() => baueKartenIndex(DATEN), []);
@@ -324,6 +330,11 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
     [fortschritt],
   );
 
+  const angesehenSet = useMemo(
+    () => new Set(statistik.angeseheneKartenIds),
+    [statistik],
+  );
+
   const gefiltert = useMemo(() => {
     return karten.filter((k) => {
       const st = statusFuer(k.id);
@@ -331,10 +342,13 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
       if (filter === 'erledigt') {
         return st !== null && st.abfragenBisErledigt === 0;
       }
+      if (filter === 'nicht_angesehen') {
+        return !angesehenSet.has(k.id);
+      }
       // offen
       return st === null || st.abfragenBisErledigt > 0;
     });
-  }, [karten, filter, statusFuer]);
+  }, [karten, filter, statusFuer, angesehenSet]);
 
   const sortiert = useMemo(() => {
     const liste = [...gefiltert];
@@ -364,10 +378,14 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
 
   return (
     <div className="flex flex-col gap-3">
+      <p className="text-xs text-slate-500 text-center">
+        <span aria-hidden="true">👁 </span>
+        {angesehenSet.size} von {karten.length} Karten angesehen
+      </p>
       <div
         role="tablist"
         aria-label="Filter"
-        className="grid grid-cols-3 gap-1 p-1 bg-slate-200 rounded-xl"
+        className="grid grid-cols-2 gap-1 p-1 bg-slate-200 rounded-xl"
       >
         <FilterButton
           aktiv={filter === 'alle'}
@@ -383,6 +401,11 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
           aktiv={filter === 'erledigt'}
           onClick={() => setFilter('erledigt')}
           label="Nur erledigte"
+        />
+        <FilterButton
+          aktiv={filter === 'nicht_angesehen'}
+          onClick={() => setFilter('nicht_angesehen')}
+          label="Noch nicht angesehen"
         />
       </div>
 
@@ -404,6 +427,7 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
         {sortiert.map((k) => {
           const st = statusFuer(k.id);
           const erledigt = st !== null && st.abfragenBisErledigt === 0;
+          const angesehen = angesehenSet.has(k.id);
           const statusText = !st
             ? 'Noch nicht gestartet'
             : erledigt
@@ -430,6 +454,13 @@ function KartenTab({ fortschritt }: { fortschritt: Fortschritt | null }) {
                   {statusText}
                 </div>
               </div>
+              <span
+                className={`text-base shrink-0 ${angesehen ? '' : 'opacity-15'}`}
+                title={angesehen ? 'Schon angesehen' : 'Noch nicht angesehen'}
+                aria-label={angesehen ? 'Schon angesehen' : 'Noch nicht angesehen'}
+              >
+                👁
+              </span>
             </li>
           );
         })}
