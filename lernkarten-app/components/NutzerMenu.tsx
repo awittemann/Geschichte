@@ -18,23 +18,10 @@ export default function NutzerMenu() {
     );
   }
 
+  // Auf der Anmeldeseite (nicht eingeloggt) kein Menü zeigen — die Middleware
+  // sorgt sowieso dafür, dass nicht-eingeloggte Nutzer nur dort landen.
   if (sitzung.nutzer === null) {
-    return (
-      <div className="flex items-center gap-2">
-        <Link
-          href="/anmelden"
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-        >
-          Anmelden
-        </Link>
-        <Link
-          href="/nutzer"
-          className="text-sm text-slate-600 hover:text-slate-900 px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
-        >
-          Nutzer
-        </Link>
-      </div>
-    );
+    return null;
   }
 
   return (

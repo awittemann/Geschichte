@@ -1,17 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSitzung } from '@/lib/client/sitzung';
+import { apiNutzerListe } from '@/lib/client/api';
 import { ladeFortschritt } from '@/lib/speicher';
 import { ladeStatistik } from '@/lib/statistik';
+import type { NutzerUebersicht } from '@/lib/server/typen';
 
 type Modus = 'login' | 'registrieren';
 
 export default function AnmeldeSeite() {
   const router = useRouter();
   const { sitzung, login, registrieren } = useSitzung();
-  const [modus, setModus] = useState<Modus>('registrieren');
+  const [modus, setModus] = useState<Modus>('login');
   const [name, setName] = useState('');
   const [passwort, setPasswort] = useState('');
   const [setzePasswort, setSetzePasswort] = useState(false);
@@ -19,6 +21,27 @@ export default function AnmeldeSeite() {
   const [hatLokaleDaten, setHatLokaleDaten] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
   const [arbeitet, setArbeitet] = useState(false);
+  const [nutzerListe, setNutzerListe] = useState<NutzerUebersicht[] | null>(null);
+  const passwortRef = useRef<HTMLInputElement | null>(null);
+
+  // Initial: Liste der Nutzer holen + Default-Modus setzen.
+  useEffect(() => {
+    let abgebrochen = false;
+    void (async () => {
+      try {
+        const u = await apiNutzerListe();
+        if (abgebrochen) return;
+        setNutzerListe(u);
+        // Wenn noch keine Nutzer existieren, Register-Tab als Default zeigen.
+        if (u.length === 0) setModus('registrieren');
+      } catch {
+        if (!abgebrochen) setNutzerListe([]);
+      }
+    })();
+    return () => {
+      abgebrochen = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -31,6 +54,28 @@ export default function AnmeldeSeite() {
     setHatLokaleDaten(hatDaten);
     if (!hatDaten) setImportieren(false);
   }, []);
+
+  function waehleNutzer(n: NutzerUebersicht) {
+    setModus('login');
+    setName(n.name);
+    setFehler(null);
+    setPasswort('');
+    // Bei Passwort-Nutzern direkt ins Passwort-Feld springen.
+    if (n.hatPasswort) {
+      // kleinen Tick warten, damit der Mode-Switch das Feld rendert
+      requestAnimationFrame(() => {
+        passwortRef.current?.focus();
+      });
+    } else {
+      // Ohne Passwort braucht der Nutzer nichts auszufüllen — Submit fokussieren.
+      requestAnimationFrame(() => {
+        const btn = document.querySelector<HTMLButtonElement>(
+          'button[type="submit"]',
+        );
+        btn?.focus();
+      });
+    }
+  }
 
   // Wenn schon angemeldet, weiterleiten.
   useEffect(() => {
@@ -181,6 +226,7 @@ export default function AnmeldeSeite() {
               Passwort (nur wenn du eines gesetzt hast)
             </span>
             <input
+              ref={passwortRef}
               type="password"
               autoComplete="current-password"
               value={passwort}
@@ -208,6 +254,48 @@ export default function AnmeldeSeite() {
               : 'Konto anlegen'}
         </button>
       </form>
+
+      {nutzerListe !== null && nutzerListe.length > 0 ? (
+        <section className="rounded-2xl bg-white shadow-sm p-4 flex flex-col gap-3">
+          <h2 className="text-sm font-semibold text-slate-700">
+            Bereits angelegte Nutzer
+          </h2>
+          <p className="text-xs text-slate-500 -mt-1">
+            Tippe auf deinen Namen, um dich anzumelden.
+          </p>
+          <ul className="flex flex-wrap gap-2">
+            {nutzerListe.map((n) => (
+              <li key={n.name}>
+                <button
+                  type="button"
+                  onClick={() => waehleNutzer(n)}
+                  className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                    name === n.name
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200'
+                  }`}
+                  aria-label={
+                    n.hatPasswort
+                      ? `Als ${n.name} anmelden (Passwort erforderlich)`
+                      : `Als ${n.name} anmelden`
+                  }
+                >
+                  {n.name}
+                  {n.hatPasswort ? (
+                    <span aria-hidden="true" className="ml-1">
+                      🔒
+                    </span>
+                  ) : null}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : nutzerListe !== null && nutzerListe.length === 0 ? (
+        <p className="text-xs text-slate-500 text-center">
+          Noch keine Nutzer. Leg dir oben ein Konto an.
+        </p>
+      ) : null}
     </main>
   );
 }
