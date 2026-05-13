@@ -1,15 +1,22 @@
 # syntax=docker/dockerfile:1.7
 # Multi-Stage-Build für die Lernkarten-Web-App.
-# Erzeugt ein schlankes Production-Image (~150 MB) auf Basis des Next.js
+# Erzeugt ein schlankes Production-Image (~200 MB) auf Basis des Next.js
 # Standalone-Outputs. Keine externen Dependencies zur Laufzeit, kein Persistent
 # Volume nötig — der Lernfortschritt liegt im localStorage des Browsers.
+#
+# Build-Context-Annahme: REPO-ROOT (nicht lernkarten-app/), damit die Sliplane-
+# Default-Konfiguration (Dockerfile-Pfad = lernkarten-app/Dockerfile,
+# Context = Repo-Root) ohne Anpassung funktioniert.
+#
+# Lokal aus dem Repo-Root bauen:
+#   docker build -f lernkarten-app/Dockerfile -t lernkarten-app .
 
 ARG NODE_VERSION=22-alpine
 
 # ---- Stage 1: Dependencies ----
 FROM node:${NODE_VERSION} AS deps
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY lernkarten-app/package.json lernkarten-app/package-lock.json ./
 RUN npm ci --ignore-scripts
 
 # ---- Stage 2: Builder ----
@@ -17,7 +24,7 @@ FROM node:${NODE_VERSION} AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY lernkarten-app/ ./
 RUN npm run build
 
 # ---- Stage 3: Runner ----

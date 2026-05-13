@@ -1,0 +1,38 @@
+# .dockerignore am Repo-Root — gilt für den Build-Context von Sliplane.
+# Hält den Build-Kontext klein und verhindert, dass node_modules / .next /
+# Tests etc. ins Image gelangen.
+
+# Versionskontrolle und IDE
+.git
+.gitignore
+.DS_Store
+**/.DS_Store
+.vscode
+.idea
+
+# Specs (gehören nicht in die App)
+Specs
+
+# Dev-Dependencies und Build-Output
+**/node_modules
+**/.next
+**/.turbo
+**/coverage
+**/build
+**/out
+
+# Logs und Environment
+**/*.log
+**/.env*
+npm-debug.log*
+
+# Tests und projektinterne Notes — nicht in der Production gebraucht
+lernkarten-app/lib/__tests__
+lernkarten-app/vitest.config.ts
+lernkarten-app/AGENTS.md
+lernkarten-app/CLAUDE.md
+lernkarten-app/README.md
+
+# Docker-Meta selbst
+**/Dockerfile*
+**/.dockerignore

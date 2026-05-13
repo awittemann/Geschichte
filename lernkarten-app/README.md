@@ -71,10 +71,12 @@ git push -u origin main
 2. „New Service" → „Deploy from GitHub" → das Repo auswählen.
 3. **Build-Konfiguration:**
    - **Builder:** Dockerfile
-   - **Dockerfile path:** `Dockerfile` (falls das Repo nur die App enthält) oder `lernkarten-app/Dockerfile` (falls die App in einem Unterordner liegt)
-   - **Build context:** `.` (bzw. `lernkarten-app` bei Unterordner)
+   - **Dockerfile path:** `lernkarten-app/Dockerfile`
+   - **Build context:** `.` (also der Repo-Root — das ist die Sliplane-Voreinstellung)
    - **Port:** `3000`
 4. „Deploy" klicken. Beim ersten Build dauert es ein paar Minuten.
+
+> Der Dockerfile-Pfad ist relativ zum Repo-Root. Die `COPY`-Anweisungen im Dockerfile sind so geschrieben, dass sie den `lernkarten-app/`-Unterordner aus dem Repo-Root holen. Eine `.dockerignore` liegt ebenfalls am Repo-Root und hält den Build-Kontext klein.
 
 ### Schritt 3: Domain und Persistenz
 
@@ -88,8 +90,10 @@ Einfach auf `main` pushen — Sliplane baut und tauscht. Während des Builds ant
 
 ### Lokal das Docker-Image testen
 
+Aus dem Repo-Root (also dem Verzeichnis, das `lernkarten-app/` enthält):
+
 ```bash
-docker build -t lernkarten-app .
+docker build -f lernkarten-app/Dockerfile -t lernkarten-app .
 docker run -p 3000:3000 lernkarten-app
 ```
 
