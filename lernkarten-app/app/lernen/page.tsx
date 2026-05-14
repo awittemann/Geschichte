@@ -2,17 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import lernkartenDaten from '@/data/lernkarten.json';
-import type {
-  Bewertung,
-  Fortschritt,
-  LernkartenDaten,
-} from '@/lib/typen';
+import type { Bewertung, Fortschritt } from '@/lib/typen';
 import {
   initialisiereFortschrittAusDaten,
-  ladeFortschritt,
   speichereFortschritt,
 } from '@/lib/speicher';
+import {
+  DATEN,
+  KARTEN_INDEX as INDEX,
+  ladeOderInitFortschritt,
+} from '@/lib/kartenIndex';
 import {
   istSessionAbgeschlossen,
   verarbeiteBewertung,
@@ -29,50 +28,6 @@ import Karte from '@/components/Karte';
 import BewertungButtons from '@/components/BewertungButtons';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import { useIstClient } from '@/lib/sessionStats';
-
-const DATEN = lernkartenDaten as LernkartenDaten;
-
-type KartenIndex = {
-  byId: Map<string, { frage: string; antwort: string; kategorie: string }>;
-  gesamt: number;
-  reihenfolge: string[];
-};
-
-function baueIndex(daten: LernkartenDaten): KartenIndex {
-  const byId = new Map<
-    string,
-    { frage: string; antwort: string; kategorie: string }
-  >();
-  const reihenfolge: string[] = [];
-  let gesamt = 0;
-  for (const kat of daten.kategorien) {
-    for (const k of kat.karten) {
-      byId.set(k.id, {
-        frage: k.frage,
-        antwort: k.antwort,
-        kategorie: kat.name,
-      });
-      reihenfolge.push(k.id);
-      gesamt += 1;
-    }
-  }
-  return { byId, gesamt, reihenfolge };
-}
-
-// Die Daten sind statisch — Index einmal beim Modulladen bauen, statt pro Mount.
-const INDEX: KartenIndex = baueIndex(DATEN);
-
-function ladeOderInitFortschritt(): Fortschritt {
-  let f = ladeFortschritt();
-  if (!f) {
-    f = initialisiereFortschrittAusDaten(DATEN);
-    speichereFortschritt(f);
-  } else if (f.sessionStart === null) {
-    f = { ...f, sessionStart: Date.now() };
-    speichereFortschritt(f);
-  }
-  return f;
-}
 
 export default function LernenSeite() {
   const router = useRouter();

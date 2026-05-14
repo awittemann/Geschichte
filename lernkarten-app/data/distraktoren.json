@@ -1,0 +1,432 @@
+{
+  "_hinweis": "Falsche Antwort-Optionen (Distraktoren) für den Multiple-Choice-Modus. Pro Karten-ID ein Pool plausibler, aber falscher Antworten; im Quiz werden daraus zufällig zwei ausgewählt. Bewusst pädagogisch gestaltet: verbreitete Verwechslungen und Fehlvorstellungen, in Länge und Stil an die richtige Antwort angelehnt.",
+  "distraktoren": {
+    "aufkl-01": [
+      "Aufklärung ist die Rückkehr des Menschen zum Glauben an die göttliche Ordnung. Wahlspruch: „Vertraue auf die Weisheit der Kirche!“ – Kant, 1784.",
+      "Aufklärung ist die Epoche, in der die Naturwissenschaften die Religion vollständig ersetzten. Wahlspruch: „Wissen ist Macht!“ – Kant, 1784.",
+      "Aufklärung ist der Ausgang des Menschen aus seiner natürlichen Armut durch Fleiß und Bildung. Wahlspruch: „Habe Mut, etwas aus dir zu machen!“ – Kant, 1770.",
+      "Aufklärung bedeutet, dass der Herrscher seine Untertanen über ihre Pflichten belehrt. Wahlspruch: „Gehorche deinem König!“ – Kant, 1784.",
+      "Aufklärung ist die Befreiung des Menschen von körperlicher Arbeit durch technische Erfindungen. Wahlspruch: „Habe Mut, die Maschine zu nutzen!“ – Kant, 1789."
+    ],
+    "aufkl-02": [
+      "Unmündigkeit ist das gesetzliche Alter, ab dem ein Mensch noch nicht wahlberechtigt ist.",
+      "Unmündigkeit ist die Unfähigkeit, für den eigenen Lebensunterhalt zu sorgen.",
+      "Unmündigkeit ist der Zustand, in dem ein Mensch keinen Besitz und kein Eigentum hat.",
+      "Unmündigkeit ist das Unvermögen, ohne die Hilfe eines anderen lesen und schreiben zu können.",
+      "Unmündigkeit bezeichnet die Zeit der Kindheit, bevor der Mensch seine Vernunft entwickelt hat."
+    ],
+    "aufkl-03": [
+      "Wenn der Mensch absichtlich gegen die Gesetze seines Herrschers verstößt und dafür bestraft wird.",
+      "Wenn die Ursache im angeborenen Mangel des Verstandes liegt, für den der Mensch nichts kann.",
+      "Wenn ein Mensch durch eigene Schuld in Armut gerät und deshalb keine Bildung erhält.",
+      "Wenn die Kirche oder der Staat dem Menschen den Gebrauch seines Verstandes ausdrücklich verbietet.",
+      "Wenn der Mensch zwar den Mut hätte, selbst zu denken, ihm aber die nötigen Bücher und Lehrer fehlen."
+    ],
+    "aufkl-04": [
+      "1) Selbst glauben, 2) Selbst beten, 3) Selbst gehorchen, 4) Selbst dulden.",
+      "1) Freiheit, 2) Gleichheit, 3) Brüderlichkeit, 4) Gerechtigkeit.",
+      "1) Selbst denken, 2) Selbst arbeiten, 3) Selbst verdienen, 4) Selbst besitzen.",
+      "1) Beobachten, 2) Experimentieren, 3) Aufzeichnen, 4) Beweisen.",
+      "1) Selbst lesen, 2) Selbst schreiben, 3) Selbst rechnen, 4) Selbst lehren."
+    ],
+    "aufkl-05": [
+      "Geistige Abkehr von allem überlieferten Wissen und das Vertrauen allein auf die eigene Eingebung.",
+      "Die Pflicht, jeden Gedanken zuerst von der Kirche prüfen zu lassen, bevor man ihn äußert.",
+      "Die wissenschaftliche Methode: Experimente durchführen und die Natur genau beobachten.",
+      "Die Fähigkeit, sich politisch selbst zu regieren, ohne einen Monarchen an der Spitze.",
+      "Das eigenständige Erlernen von Lesen und Schreiben ohne Hilfe eines Lehrers."
+    ],
+    "aufkl-06": [
+      "Geistige Befreiung von der Bevormundung durch kirchliche und weltliche Autoritäten.",
+      "Die Welt so hinzunehmen, wie sie von Gott geschaffen wurde, ohne sie zu hinterfragen.",
+      "Die moralische Fähigkeit, mit eigenen Augen zwischen Gut und Böse zu unterscheiden.",
+      "Das Recht jedes Bürgers, die Sitzungen seiner Regierung persönlich zu beobachten.",
+      "Sich allein auf die Schriften antiker Philosophen wie Platon und Aristoteles zu verlassen."
+    ],
+    "aufkl-07": [
+      "Die Fähigkeit, die eigenen Gefühle und Leidenschaften durch die Vernunft zu beherrschen.",
+      "Das Recht des Königs, allein und ohne Beratung über sein Volk zu herrschen.",
+      "Geistige Befreiung von der Bevormundung durch die Kirche.",
+      "Die Pflicht jedes Untertanen, seinen eigenen Haushalt und sein Gesinde streng zu führen.",
+      "Die wissenschaftliche Beherrschung der Naturgesetze durch Experimente."
+    ],
+    "aufkl-08": [
+      "Juristische Befugnis: Jeder Bürger darf in eigener Sache als Richter auftreten und Urteile fällen.",
+      "Moralische Urteilsfähigkeit. Der Mensch ist „von Natur aus böse“ und braucht die Kirche, um Gut und Böse zu lernen.",
+      "Die Fähigkeit, wissenschaftliche Versuchsergebnisse richtig zu bewerten und einzuordnen.",
+      "Das Recht des Volkes, über die Gesetze seiner Regierung abzustimmen.",
+      "Die Pflicht, sein Urteil stets dem der kirchlichen und weltlichen Obrigkeit unterzuordnen."
+    ],
+    "aufkl-09": [
+      "Der Mensch ist ein gläubiges Wesen. Erst der Glaube unterscheidet ihn vom Tier und begründet seine Würde.",
+      "Der Mensch ist von Natur aus ein Sünder, dessen Würde ihm allein durch die Gnade Gottes zukommt.",
+      "Der Mensch ist ein gesellschaftliches Wesen. Erst die Zugehörigkeit zu einem Stand gibt ihm seine Würde.",
+      "Der Mensch ist ein arbeitendes Wesen. Die Fähigkeit zur Arbeit unterscheidet ihn vom Tier.",
+      "Der Mensch ist ein sprachbegabtes Wesen. Die Sprache allein begründet seine einzigartige Stellung."
+    ],
+    "aufkl-10": [
+      "Das Recht auf Arbeit, auf Bildung, auf Wohnung und auf medizinische Versorgung. Diese Rechte muss der Staat jedem gewähren.",
+      "Gehorsam gegenüber dem König, Treue zur Kirche und Achtung des Adels. Diese Pflichten gelten für jeden von Natur aus.",
+      "Unversehrtheit des Lebens und Freiheit – aber nur für die Angehörigen des Adels und des Klerus.",
+      "Das Recht auf freie Religionsausübung, auf Pressefreiheit und auf Versammlungsfreiheit. Diese Rechte verleiht der Herrscher.",
+      "Freiheit, Gleichheit und Brüderlichkeit. Diese drei Rechte wurden in der Magna Charta festgeschrieben."
+    ],
+    "abso-01": [
+      "Herrschaftsform des Mittelalters, bei der der König seine Macht mit den Fürsten und Ständen teilen musste.",
+      "Eine Regierungsform, in der das Volk durch gewählte Vertreter alle wichtigen Entscheidungen trifft.",
+      "Herrschaftsform des 19. Jahrhunderts, bei der der Monarch nur noch nach einer Verfassung regieren darf.",
+      "Die Herrschaft der katholischen Kirche über alle weltlichen Fürsten Europas.",
+      "Eine Herrschaftsform, in der der Monarch zwar viel Macht hat, aber selbst streng an die Gesetze gebunden ist."
+    ],
+    "abso-02": [
+      "Friedrich der Große von Preußen („Alter Fritz“). Berühmter Ausspruch: „Ich bin der erste Diener meines Staates.“",
+      "Ludwig XVI. von Frankreich. Berühmter Ausspruch: „Nach mir die Sintflut.“",
+      "Karl der Große. Berühmter Ausspruch: „Ich bin der Staat“ (L'État, c'est moi).",
+      "Heinrich VIII. von England („Sonnenkönig“). Berühmter Ausspruch: „Der Staat gehört dem Volk.“",
+      "Napoleon Bonaparte von Frankreich. Berühmter Ausspruch: „Ich bin der Staat“ (L'État, c'est moi)."
+    ],
+    "abso-03": [
+      "Auf den „Gesellschaftsvertrag“ – die Vorstellung, vom Volk freiwillig zum Herrscher gewählt worden zu sein.",
+      "Auf das „Erbrecht des Adels“ – die Vorstellung, dass nur der älteste Adel herrschen darf.",
+      "Auf die „Volkssouveränität“ – die Vorstellung, seine Macht im Namen des ganzen Volkes auszuüben.",
+      "Auf das „Naturrecht“ – die Vorstellung, dass die Macht des Stärkeren von Natur aus gilt.",
+      "Auf die „Magna Charta“ – den Freiheitsbrief, der dem König seine Rechte verbürgte."
+    ],
+    "abso-04": [
+      "1) Legislative, 2) Exekutive, 3) Judikative.",
+      "1) Klerus, 2) Adel, 3) Dritter Stand.",
+      "1) Kirche, 2) Geld, 3) Bündnisse mit anderen Königen.",
+      "1) Hofstaat von Versailles, 2) Volksvertretung, 3) freie Presse.",
+      "1) Das Gottesgnadentum, 2) die Vernunft, 3) der Gesellschaftsvertrag."
+    ],
+    "abso-05": [
+      "Die Gesellschaft bestand aus drei Ständen: 1) König, 2) Bürgertum, 3) Bauern. Alle drei Stände waren rechtlich gleichgestellt.",
+      "Die Gesellschaft bestand aus drei Gewalten: 1) Legislative, 2) Exekutive, 3) Judikative, die sich gegenseitig kontrollierten.",
+      "Die Gesellschaft bestand aus zwei Ständen: 1) den Reichen und 2) den Armen, zwischen denen es keinen Aufstieg gab.",
+      "Die Gesellschaft bestand aus drei Ständen: 1) Klerus, 2) Adel, 3) Dritter Stand – wobei der Dritte Stand die meisten Rechte besaß.",
+      "Die Einteilung der Bürger nach ihrem Vermögen in drei Klassen, die unterschiedlich viele Stimmen bei Wahlen hatten."
+    ],
+    "abso-06": [
+      "Großer Freiheitsbrief: Der französische König musste dem Volk erstmals das Wahlrecht zugestehen.",
+      "Ein Gesetz, das dem englischen König erstmals die absolute und unumschränkte Macht über seine Untertanen verlieh.",
+      "Ein Vertrag, mit dem die englische Kirche ihre Unabhängigkeit vom Papst in Rom erklärte.",
+      "Der Freiheitsbrief, mit dem die nordamerikanischen Kolonien ihre Unabhängigkeit von England erklärten.",
+      "Ein Schutzgesetz, das garantierte, dass niemand ohne richterliche Verfügung festgehalten werden durfte."
+    ],
+    "abso-07": [
+      "Schutz des Eigentums in England. Garantierte, dass der König niemandem ohne Zustimmung des Parlaments Steuern abverlangen durfte.",
+      "Ein Gesetz, das in England die Folter bei Verhören ausdrücklich erlaubte. Übersetzt: „Ergreife den Körper.“",
+      "Der Freiheitsbrief, mit dem der englische König seinen Untertanen erstmals Eigentumsrechte zugestand.",
+      "Schutz der Religionsfreiheit in England. Garantierte jedem Bürger das Recht, seinen Glauben frei zu wählen.",
+      "Ein Gesetz, das die Gewaltenteilung zwischen König und Parlament in England einführte."
+    ],
+    "abso-08": [
+      "John Locke (1632–1704) und Charles de Montesquieu (1689–1755).",
+      "Sokrates (469–399 v. Chr.) und Cicero (106–43 v. Chr.).",
+      "Immanuel Kant (1724–1804) und Jean-Jacques Rousseau (1712–1778).",
+      "Homer (8. Jh. v. Chr.) und Pythagoras (570–495 v. Chr.).",
+      "Augustinus (354–430 n. Chr.) und Thomas von Aquin (1225–1274)."
+    ],
+    "abso-09": [
+      "Die Lehre von der Erbsünde: Weil alle Menschen Sünder sind, brauchen sie alle gleichermaßen den Schutz der Kirche.",
+      "Das Gebot „Du sollst nicht töten“: Daraus folgt das Recht des Staates, Verbrecher zu bestrafen.",
+      "Die Vorstellung, dass Gott die Herrscher unmittelbar einsetzt – das spätere Gottesgnadentum.",
+      "Die Schöpfungsgeschichte: Weil Gott die Welt in sechs Tagen schuf, ist auch der Mensch zur Arbeit verpflichtet.",
+      "Das Gleichnis vom verlorenen Sohn: Jeder Mensch hat das Recht, jederzeit in seine Heimat zurückzukehren."
+    ],
+    "abso-10": [
+      "Königliche Einrichtungen, in denen geprüft wurde, welche Bücher gedruckt werden durften und welche verboten wurden.",
+      "Schulen, in denen Kinder des Dritten Standes kostenlos das Lesen und Schreiben lernen konnten.",
+      "Geheime Zusammenkünfte des Adels, auf denen über den Sturz des Königs beraten wurde.",
+      "Klösterliche Bibliotheken, in denen Mönche die antiken Schriften abschrieben und bewahrten.",
+      "Vereinigungen von Buchdruckern, die den Preis für Bücher gemeinsam festlegten."
+    ],
+    "locke-01": [
+      "Französischer Philosoph (1689–1755). Verfasste 1748 „Vom Geist der Gesetze“.",
+      "Englischer Philosoph (1632–1704). Verfasste 1762 „Der Gesellschaftsvertrag“.",
+      "Schottischer Philosoph (1711–1776). Verfasste die „Abhandlung über die menschliche Natur“.",
+      "Englischer Naturwissenschaftler (1643–1727). Begründete mit seinen Werken die moderne Physik.",
+      "Deutscher Philosoph (1724–1804). Verfasste 1784 den Aufsatz „Was ist Aufklärung?“."
+    ],
+    "locke-02": [
+      "Ein „Krieg aller gegen alle“, in dem das Leben des Menschen einsam, arm und kurz ist.",
+      "Ein Zustand der vollkommenen Harmonie, in dem der Mensch von Natur aus gut ist und keine Gesetze braucht.",
+      "Ein Zustand, in dem der Stärkere von Natur aus über den Schwächeren herrscht.",
+      "Ein Zustand der Unfreiheit, in dem jeder Mensch bereits einem Herrscher untertan ist.",
+      "Ein geistiger Gesamtkörper, in dem der allgemeine Wille die oberste Leitung übernimmt."
+    ],
+    "locke-03": [
+      "Das Recht des Stärkeren: Die Vernunft lehrt, dass der Mächtigere über den Schwächeren bestimmen darf.",
+      "Das von Gott gegebene Recht der Könige, über ihre Untertanen unumschränkt zu herrschen.",
+      "Die Vernunft lehrt, dass jeder dem Gemeinwohl dienen muss; die Vollziehung liegt allein beim Staat.",
+      "Die Summe der Gesetze, die ein Herrscher erlässt und die für alle Untertanen gleichermaßen gelten.",
+      "Das Recht jedes Menschen, sich seinen Stand und seinen Beruf in der Gesellschaft frei zu wählen."
+    ],
+    "locke-04": [
+      "Weil der Mensch von Natur aus böse ist und ohne einen starken Herrscher im Krieg aller gegen alle leben würde.",
+      "Weil ihm im Naturzustand die Gesellschaft anderer Menschen fehlt und er sich einsam fühlt.",
+      "Weil Gott den Menschen befiehlt, sich einem von ihm eingesetzten Herrscher zu unterwerfen.",
+      "Weil der Mensch im Naturzustand kein Eigentum erwerben darf und deshalb verarmt.",
+      "Weil er erst in einem Staat seine Vernunft entwickeln und aus seiner Unmündigkeit treten kann."
+    ],
+    "locke-05": [
+      "Die Mehrung der Macht und des Ruhms des Herrschers nach innen und außen.",
+      "Die Verwirklichung des allgemeinen Willens und des Gemeinwohls über die Interessen des Einzelnen hinweg.",
+      "Die Erziehung der Untertanen zu Gehorsam gegenüber Kirche und Krone.",
+      "Die gerechte Verteilung des Eigentums, damit alle Bürger gleich viel besitzen.",
+      "Die Bremsung der Macht durch eine strenge Teilung in drei Gewalten."
+    ],
+    "locke-06": [
+      "Legislative, Exekutive und Judikative müssen getrennt sein, damit die Macht die Macht bremst.",
+      "Kirche und Staat müssen getrennt sein, weil die Religion nicht in weltliche Angelegenheiten eingreifen darf.",
+      "Adel und Bürgertum müssen getrennt regieren, damit kein Stand den anderen unterdrückt.",
+      "Legislative und Judikative müssen getrennt sein, weil sonst der Richter nach eigenen Gesetzen urteilen würde.",
+      "Er unterscheidet keine Gewalten – nach Locke soll alle Macht in der Hand des Volkes vereint bleiben."
+    ],
+    "locke-07": [
+      "Sie ist die ausführende Gewalt: Sie sorgt für Sicherheit, schließt Frieden und führt Krieg.",
+      "Sie ist die schwächste Gewalt: Sie darf Gesetze nur vorschlagen, beschlossen werden sie vom Monarchen.",
+      "Sie ist die richterliche Gewalt: Sie bestraft Verbrechen und entscheidet die Streitfälle der Bürger.",
+      "Sie ist die höchste Gewalt und liegt allein in der Hand des Königs, der von Gott eingesetzt ist.",
+      "Sie ist die oberste Leitung im Staat und identisch mit dem „allgemeinen Willen“ des Volkes."
+    ],
+    "locke-08": [
+      "„Überall, wo ein einzelner Mensch ohne die Zustimmung des Volkes zum Herrscher wird, fängt die Tyrannei an.“",
+      "„Sobald die drei Gewalten – Legislative, Exekutive und Judikative – in einer Hand vereint sind, beginnt die Tyrannei.“",
+      "„Wenn das Volk seinem Herrscher den Gehorsam verweigert und sich gegen ihn erhebt, beginnt die Tyrannei.“",
+      "„Überall, wo die Kirche sich in die Angelegenheiten des Staates einmischt, fängt die Tyrannei an.“",
+      "„Sobald ein Herrscher sich nicht mehr auf das Gottesgnadentum berufen kann, beginnt die Tyrannei.“"
+    ],
+    "mont-01": [
+      "Englischer Philosoph (1632–1704). Verfasste 1690 die „Zwei Abhandlungen über die Regierung“.",
+      "Französischsprachiger Philosoph (1712–1778). Verfasste 1762 „Der Gesellschaftsvertrag“.",
+      "Französischer Philosoph (1689–1755). Verfasste 1748 „Der Gesellschaftsvertrag“. Inspiration kam von einer Italienreise.",
+      "Deutscher Philosoph (1724–1804). Verfasste 1781 die „Kritik der reinen Vernunft“.",
+      "Französischer Schriftsteller (1694–1778), bekannt unter dem Namen Voltaire."
+    ],
+    "mont-02": [
+      "Jeder Mensch ist von Natur aus gut; daher kann man ihm die Macht bedenkenlos anvertrauen.",
+      "Nur ein einziger, von Gott eingesetzter Herrscher kann den Missbrauch der Macht verhindern.",
+      "Die Macht gehört allein dem Volk; daher darf sie niemals geteilt, sondern muss vereint bleiben.",
+      "Wer Macht hat, muss sie nutzen, um das Gemeinwohl gegen die Einzelinteressen durchzusetzen.",
+      "Macht ist nur dann gerecht, wenn sie durch einen Gesellschaftsvertrag freiwillig übertragen wurde."
+    ],
+    "mont-03": [
+      "1) Legislative (gesetzgebend), 2) Exekutive (ausführend). Eine dritte Gewalt unterscheidet er nicht.",
+      "1) Klerus, 2) Adel, 3) Dritter Stand.",
+      "1) König, 2) Parlament, 3) Volk.",
+      "1) Kirchliche Gewalt, 2) weltliche Gewalt, 3) militärische Gewalt.",
+      "1) Der Einzelwille, 2) der Gesamtwille, 3) der allgemeine Wille."
+    ],
+    "mont-04": [
+      "Stiftet Frieden oder Krieg und sorgt für die Sicherheit nach innen und außen.",
+      "Bestraft Verbrechen und entscheidet über die Streitfälle der Einzelpersonen.",
+      "Setzt die beschlossenen Gesetze in die Tat um und überwacht ihre Einhaltung.",
+      "Wählt den Monarchen und kann ihn bei Machtmissbrauch wieder absetzen.",
+      "Legt die Steuern fest und verwaltet die Einnahmen und Ausgaben des Staates."
+    ],
+    "mont-05": [
+      "Erlässt die Gesetze, ändert sie oder schafft sie wieder ab.",
+      "Bestraft Verbrechen und sitzt zu Gericht über die Streitfälle der Einzelpersonen.",
+      "Vertritt den allgemeinen Willen und ist die höchste Gewalt im Staat.",
+      "Prüft, ob die erlassenen Gesetze mit der Verfassung übereinstimmen.",
+      "Wählt die Repräsentanten des Volkes und überwacht ihre Arbeit."
+    ],
+    "mont-06": [
+      "Erlässt Gesetze, ändert sie oder schafft sie wieder ab.",
+      "Stiftet Frieden oder Krieg und sendet und empfängt Botschaften.",
+      "Erlässt die Gesetze und setzt sie zugleich selbst in die Tat um.",
+      "Bestimmt, wie die Macht des Staates insgesamt gebraucht werden soll.",
+      "Wacht darüber, dass der Monarch seine Macht nicht missbraucht."
+    ],
+    "mont-07": [
+      "Das Recht, alles zu tun, was man will, ohne durch Gesetze eingeschränkt zu werden.",
+      "Der Ausgang des Menschen aus seiner selbstverschuldeten Unmündigkeit.",
+      "Die Gleichheit aller Bürger an Vermögen, Bildung und politischem Einfluss.",
+      "Die Freiheit, im Naturzustand ohne jede staatliche Gewalt zu leben.",
+      "Der Zustand, in dem jeder nur dem allgemeinen Willen und damit sich selbst gehorcht."
+    ],
+    "mont-08": [
+      "Es gibt keine Freiheit: Der Richter wäre zugleich Gesetzgeber und könnte nach eigenen Gesetzen urteilen.",
+      "Es gibt keine Freiheit: Der Richter hätte die Zwangsgewalt eines Unterdrückers.",
+      "Die Gesetzgebung würde zu langsam, weil sich Monarch und Senat ständig einigen müssten.",
+      "Das Volk könnte dann nicht mehr selbst über die Gesetze abstimmen.",
+      "Die Kirche könnte beide Gewalten an sich reißen und über den Staat herrschen."
+    ],
+    "mont-09": [
+      "Derselbe Monarch könnte tyrannische Gesetze erlassen und sie zugleich tyrannisch durchführen.",
+      "Der Richter hätte die Zwangsgewalt eines Unterdrückers, weil er das Recht selbst durchsetzen könnte.",
+      "Die Rechtsprechung würde zu langsam, weil der Richter zuerst neue Gesetze beschließen müsste.",
+      "Das Volk verlöre sein Recht, die Richter selbst zu wählen.",
+      "Die Exekutive könnte dann keine Botschaften mehr senden und empfangen."
+    ],
+    "mont-10": [
+      "Der Richter wäre zugleich Gesetzgeber und könnte nach eigenen Gesetzen urteilen.",
+      "Derselbe Senat könnte tyrannische Gesetze erlassen und tyrannisch durchführen.",
+      "Die Macht über Leben und Freiheit läge dann allein beim gesetzgebenden Volk.",
+      "Der Monarch könnte dann keine Gesetze mehr erlassen, ändern oder abschaffen.",
+      "Die Rechtsprechung würde unabhängig vom Willen des Volkes."
+    ],
+    "mont-11": [
+      "Ein Monarch, weil unverzügliches Handeln nötig ist und dies besser von einem als von mehreren besorgt wird.",
+      "Der Adel als erblicher Stand, der allein die nötige Bildung für die Gesetzgebung besitzt.",
+      "Die unabhängigen Richter, weil nur sie die Gesetze wirklich kennen.",
+      "Der allgemeine Wille, der als geistiger Gesamtkörper über allen Einzelnen steht.",
+      "Das ganze Volk unmittelbar, das in regelmäßigen Versammlungen alle Gesetze selbst beschließt."
+    ],
+    "mont-12": [
+      "Das Volk als Gesamtkörper, das durch gewählte Repräsentanten vertreten wird.",
+      "Eine Versammlung mehrerer gewählter Vertreter, damit kein Einzelner zu viel Macht bekommt.",
+      "Die unabhängigen Richter, die zugleich für die Sicherheit des Staates sorgen.",
+      "Der Adel, der seit jeher das Heer befehligt und den Frieden sichert.",
+      "Niemand allein – die Exekutive muss stets von Legislative und Judikative gemeinsam ausgeübt werden."
+    ],
+    "rouss-01": [
+      "Französischer Philosoph (1689–1755). Politisches Hauptwerk: „Vom Geist der Gesetze“ (1748).",
+      "Englischer Philosoph (1632–1704). Politisches Hauptwerk: „Zwei Abhandlungen über die Regierung“ (1690).",
+      "Französischsprachiger Schriftsteller und Philosoph (1712–1778). Politisches Hauptwerk: „Vom Geist der Gesetze“ (1762).",
+      "Deutscher Philosoph (1724–1804). Politisches Hauptwerk: „Zum ewigen Frieden“ (1795).",
+      "Französischer Schriftsteller (1694–1778). Politisches Hauptwerk: „Candide“ (1759)."
+    ],
+    "rouss-02": [
+      "Wie können die drei Gewalten so getrennt werden, dass die Macht die Macht wirksam bremst?",
+      "Wie kann der Mensch aus seiner selbstverschuldeten Unmündigkeit heraustreten?",
+      "Wie kann ein Monarch seine Macht so ausüben, dass er sie nicht missbraucht?",
+      "Wie kann der Staat das Vermögen gerecht verteilen, so dass alle Bürger gleich viel besitzen?",
+      "Wie kann eine Gesellschaft den Einzelnen zwingen, dem König zu gehorchen, ohne Gewalt anzuwenden?"
+    ],
+    "rouss-03": [
+      "Durch die Gewaltenteilung: Legislative, Exekutive und Judikative werden getrennt, damit niemand seine Macht missbraucht.",
+      "Durch einen starken Monarchen, dem jeder Einzelne einen Teil seiner Rechte abtritt, damit dieser für Ordnung sorgt.",
+      "Durch das Naturrecht: Jeder behält im Staat genau die Rechte, die er schon im Naturzustand hatte.",
+      "Durch Bildung: Erst wenn alle Bürger aufgeklärt sind, lösen sich die Konflikte der Gesellschaft von selbst.",
+      "Durch einen Vertrag zwischen Volk und Herrscher, in dem beide Seiten sich gegenseitige Pflichten versprechen."
+    ],
+    "rouss-04": [
+      "„Die Macht muss die Macht bremsen, damit niemand sie missbrauchen kann.“",
+      "„Habe Mut, dich deines eigenen Verstandes zu bedienen!“",
+      "„Jeder von uns tritt seine Person und seine Kraft an den Monarchen ab, der dafür unsere Sicherheit verbürgt.“",
+      "„Der Mensch ist frei geboren, und überall liegt er in Ketten – darum muss die Legislative von der Exekutive getrennt sein.“",
+      "„Jeder behält seine Person und seine Rechte für sich allein und tritt nur einen kleinen Teil an die Gemeinschaft ab.“"
+    ],
+    "rouss-05": [
+      "Eine streng gegliederte Ständegesellschaft aus Klerus, Adel und Drittem Stand.",
+      "Ein absoluter Monarch, der von nun an die ganze Macht des Volkes in seiner Person vereint.",
+      "Ein Staat mit drei getrennten Gewalten, die sich gegenseitig kontrollieren.",
+      "Ein Bündnis freier Einzelner, die ihre Rechte jederzeit wieder zurücknehmen können.",
+      "Ein geistiger Gesamtkörper, dessen oberste Leitung beim erblichen Adel liegt."
+    ],
+    "rouss-06": [
+      "Der gemeinsame, auf das Gemeinwohl gerichtete Wille des ganzen Staatskörpers.",
+      "Der Wille des Monarchen, der als Einziger über das Volk bestimmen darf.",
+      "Der Wille der Mehrheit, der bei jeder Abstimmung den Ausschlag gibt.",
+      "Der von Gott in jeden Menschen gelegte Wille, das Gute zu tun.",
+      "Die Summe aller Stimmen des Volkes, die in der Legislative zusammenkommen."
+    ],
+    "rouss-07": [
+      "Der besondere, individuelle Wille jedes einzelnen Menschen innerhalb der Gesellschaft.",
+      "Der Wille des Monarchen, der im Namen Gottes über das ganze Volk herrscht.",
+      "Die bloße Summe aller Einzelwillen, ausgezählt bei einer Mehrheitsabstimmung.",
+      "Der Wille des Adels und des Klerus, die gemeinsam die Geschicke des Staates lenken.",
+      "Das natürliche Gesetz der Vernunft, das schon im Naturzustand gilt."
+    ],
+    "rouss-08": [
+      "Er darf die Gesellschaft jederzeit verlassen und in den Naturzustand zurückkehren.",
+      "Er wird vom Monarchen bestraft, der von Gott zur Wahrung der Ordnung eingesetzt ist.",
+      "Er verliert sein Eigentum, behält aber seine persönliche Freiheit.",
+      "Sein Einzelwille gilt dann als der wahre allgemeine Wille, dem die anderen folgen müssen.",
+      "Er wird vor ein unabhängiges Gericht gestellt, das über sein Vergehen urteilt."
+    ],
+    "rouss-09": [
+      "Eine vollständige Gleichheit des Vermögens: Im Staat muss jeder Bürger gleich viel besitzen.",
+      "Eine Gleichheit vor Gott: Im Jenseits sind alle Menschen gleich, im Diesseits bleiben sie ungleich.",
+      "Eine natürliche Gleichheit: Rousseau bestreitet, dass Menschen von Natur aus ungleich sind.",
+      "Eine Gleichheit der Stände: Klerus, Adel und Dritter Stand erhalten gleich viele Stimmen.",
+      "Eine Gleichheit der Macht: Jeder Bürger übt abwechselnd selbst die Regierung aus."
+    ],
+    "rouss-10": [
+      "Der Monarch ist souverän, übt seine Macht aber im Namen und zum Wohl des Volkes aus.",
+      "Souverän sind die drei Gewalten gemeinsam, die sich gegenseitig im Gleichgewicht halten.",
+      "Souverän ist das Naturrecht, dem sich Volk und Herrscher gleichermaßen unterordnen müssen.",
+      "Das Volk ist souverän, überträgt seine Macht aber dauerhaft und unwiderruflich an gewählte Vertreter.",
+      "Souverän ist, wer das meiste Eigentum besitzt, denn Eigentum ist die Grundlage aller Macht."
+    ],
+    "mr-01": [
+      "Den Sturz des libyschen Machthabers Muammar al-Gaddafi durch eine internationale Militärkoalition.",
+      "Die friedliche Revolution in der DDR von 1989, die zum Fall der Berliner Mauer führte.",
+      "Den Bau der ägyptischen Pyramiden als Sinnbild jahrtausendealter Unterdrückung.",
+      "Den Volksaufstand gegen Hosni Mubarak (ab Januar 2011) – allerdings ohne jede Rolle der sozialen Medien, die damals noch verboten waren.",
+      "Eine Demonstration für Frauenrechte in Ägypten, die von der Regierung gewaltsam aufgelöst wurde."
+    ],
+    "mr-02": [
+      "Die Folgen einer Überschwemmungskatastrophe in Bangladesch mit Millionen Obdachlosen.",
+      "Den Völkermord in Ruanda von 1994, bei dem innerhalb weniger Monate hunderttausende Menschen getötet wurden.",
+      "Die Folgen von Dürre und Bürgerkrieg im Sudan – mit anschließendem Freispruch von Präsident al-Bashir durch den IStGH.",
+      "Eine Hungersnot in Äthiopien in den 1980er-Jahren, die durch das Konzert „Live Aid“ weltweit bekannt wurde.",
+      "Die Folgen des Kolonialismus in Afrika, der bis heute für Armut und Hunger verantwortlich gemacht wird."
+    ],
+    "mr-03": [
+      "Das Gefängnis auf der Insel Alcatraz, in dem die gefährlichsten Verbrecher der USA einsaßen.",
+      "Ein Flüchtlingslager auf Kuba, in dem die USA Menschen aus Mittelamerika an der Einreise hinderten.",
+      "Das US-Häftlingslager Guantanamo – ein Vorzeigegefängnis, das wegen seiner besonders fairen Verfahren international gelobt wurde.",
+      "Ein geheimes Lager der Sowjetunion auf Kuba, das während der Kubakrise 1962 entdeckt wurde.",
+      "Das Lager, in dem nach dem Zweiten Weltkrieg Kriegsverbrecher auf ihren Prozess in Nürnberg warteten."
+    ],
+    "mr-04": [
+      "Gedenkfeier für eine russische Bürgerrechtlerin, die nach Protesten gegen Wahlfälschungen ins Gefängnis kam.",
+      "Eine Preisverleihung an Anna Politkowskaja, die für ihre Reportagen mit dem Friedensnobelpreis geehrt wurde.",
+      "Gedenkfeier für einen sowjetischen Dissidenten, der in den 1970er-Jahren in ein Arbeitslager verbannt wurde.",
+      "Eine Demonstration russischer Journalisten für höhere Löhne und bessere Arbeitsbedingungen.",
+      "Gedenkfeier für eine ukrainische Journalistin, die während des Krieges in der Ostukraine ums Leben kam."
+    ],
+    "mr-05": [
+      "Menschenrechte gelten zwar weltweit als selbstverständlich und werden seit ihrer Erklärung kaum noch verletzt.",
+      "Menschenrechte sind ein westliches Ideal, das in den meisten Teilen der Welt offiziell gar nicht anerkannt wird.",
+      "Menschenrechte stehen nur den Bürgern demokratischer Staaten zu, nicht aber den Menschen in Diktaturen.",
+      "Der Anspruch der Menschenrechte ist hoch, doch in der Wirklichkeit sorgt der Internationale Strafgerichtshof dafür, dass sie fast überall eingehalten werden.",
+      "Menschenrechte sind ein veraltetes Konzept der Aufklärung, das in der modernen Welt keine Bedeutung mehr hat."
+    ],
+    "vergl-01": [
+      "Alle drei: 1) verteidigen das Gottesgnadentum, 2) sehen Gehorsam als zentralen Wert, 3) unterstützen den Absolutismus, 4) berufen sich auf die Bibel.",
+      "Alle drei: 1) fordern die Abschaffung jeglichen Eigentums, 2) lehnen jeden Staat ab, 3) wollen zurück in den Naturzustand.",
+      "Alle drei: 1) stammen aus Frankreich, 2) lebten im 17. Jahrhundert, 3) waren Geistliche, 4) schrieben dasselbe Hauptwerk.",
+      "Alle drei: 1) fordern die Dreiteilung der Gewalten, 2) lehnen den Gesellschaftsvertrag ab, 3) sehen den Monarchen als souverän.",
+      "Alle drei: 1) lehnen die Vernunft ab, 2) vertrauen allein auf den Glauben, 3) wollen die Ständegesellschaft bewahren."
+    ],
+    "vergl-02": [
+      "Die Gewaltenteilung in drei Gewalten: Legislative, Exekutive und Judikative.",
+      "Die Volkssouveränität: Nicht der Monarch, sondern das Volk ist souverän.",
+      "Das Gottesgnadentum: Der Herrscher wird von Gott unmittelbar eingesetzt.",
+      "Der Begriff der Aufklärung als „Ausgang aus der selbstverschuldeten Unmündigkeit“.",
+      "Der „allgemeine Wille“ als oberste Leitung im Staat."
+    ],
+    "vergl-03": [
+      "Naturrechte als Zweck des Staates: Schutz von Leben, Freiheit und Eigentum. Trennung von Legislative und Exekutive.",
+      "Die Volkssouveränität: Das Volk – nicht der Monarch – ist souverän.",
+      "Der Gesellschaftsvertrag, durch den der „allgemeine Wille“ entsteht.",
+      "Die Trennung von Kirche und Staat als Grundlage jeder Freiheit.",
+      "Die vier Postulate: Selbst denken, selbst sehen, selbst herrschen, selbst urteilen."
+    ],
+    "vergl-04": [
+      "Gewaltenteilung in drei Vollmachten und der Grundsatz „Macht muss Macht bremsen“.",
+      "Naturrechte als Zweck des Staates: Schutz von Leben, Freiheit und Eigentum.",
+      "Die Habeas-Corpus-Akte als Schutz der körperlichen Freiheit.",
+      "Das Gottesgnadentum als Legitimation der monarchischen Herrschaft.",
+      "Die Trennung von Legislative und Exekutive wegen der menschlichen Schwäche."
+    ],
+    "vergl-05": [
+      "Naturrechte → Gottesgnadentum. Gewaltenteilung → Absolutismus. Volkssouveränität → Monarchie. Gesellschaftsvertrag → Ständegesellschaft.",
+      "Die Ideen der Aufklärung wirken heute nicht mehr weiter, weil sie durch modernere Theorien vollständig ersetzt wurden.",
+      "Naturrechte → Pflichtenkatalog. Gewaltenteilung → Einheitsregierung. Volkssouveränität → Expertenherrschaft. Gesellschaftsvertrag → Befehl.",
+      "Sie wirken nur im Privatrecht weiter, nicht aber in der Verfassung oder im Aufbau des Staates.",
+      "Gewaltenteilung → Grundrechte. Naturrechte → Demokratie. Gesellschaftsvertrag → Verfassungsstaat. Volkssouveränität → Verfassung."
+    ],
+    "vergl-06": [
+      "Sie blieb eine reine Gelehrtenbewegung: Die Ideen wurden zwar diskutiert, veränderten die politische Wirklichkeit aber nicht.",
+      "Sie bewirkte eine Rückkehr zu den Vorstellungen der Antike und des Mittelalters.",
+      "Sie führte zunächst zu einer Stärkung des Absolutismus, weil die Herrscher die neuen Ideen für sich nutzten.",
+      "Sie veränderte allein die Naturwissenschaften, ließ Politik und Gesellschaft aber unberührt.",
+      "Sie bewirkte einen langsamen, kaum spürbaren Wandel, der erst im 20. Jahrhundert sichtbar wurde."
+    ]
+  }
+}

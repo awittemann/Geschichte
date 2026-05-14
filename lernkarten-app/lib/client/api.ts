@@ -98,3 +98,41 @@ export async function apiPasswortAendern(
   });
   return jsonOderFehler<{ ok: true; hatPasswort: boolean }>(res);
 }
+
+// --- KI-Abfragemodus ---------------------------------------------------------
+
+/** Eine Nachricht im Rückfragen-Chat zum KI-Feedback. */
+export type KiChatNachricht = { rolle: 'nutzer' | 'assistent'; text: string };
+
+/**
+ * Lässt die eingegebene Antwort zu einer Karte vom LLM bewerten.
+ * Liefert eine Score (1–100) und ein Feedback in Textform.
+ */
+export async function apiKiBewerten(
+  kartenId: string,
+  nutzerAntwort: string,
+): Promise<{ score: number; feedback: string }> {
+  const res = await fetch('/api/ki/bewerten', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ kartenId, nutzerAntwort }),
+  });
+  return jsonOderFehler<{ score: number; feedback: string }>(res);
+}
+
+/**
+ * Stellt eine Rückfrage zum KI-Feedback. `verlauf` enthält den bisherigen
+ * Chat inklusive des ursprünglichen Feedbacks (als erste assistent-Nachricht).
+ */
+export async function apiKiChat(
+  kartenId: string,
+  nutzerAntwort: string,
+  verlauf: KiChatNachricht[],
+): Promise<{ antwort: string }> {
+  const res = await fetch('/api/ki/chat', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ kartenId, nutzerAntwort, verlauf }),
+  });
+  return jsonOderFehler<{ antwort: string }>(res);
+}

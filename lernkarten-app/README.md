@@ -11,6 +11,8 @@ Die App ist bewusst **schlicht**: keine Anmeldung, keine Konten, keine Werbung, 
 - **61 Karten in 7 Kategorien** durcharbeiten (Aufklärung, Absolutismus, Locke, Montesquieu, Rousseau, Menschenrechte heute, Vergleich).
 - **Selbsteinschätzung** auf vier Stufen (nicht gewusst / wenig / gut / **perfekt**).
 - Eine Karte fällt **nur dann** aus dem Stapel, wenn sie als „**perfekt gewusst**" markiert wurde. So lernt man jede Karte am Ende mindestens einmal richtig.
+- **KI-Abfragemodus**: Antwort selbst eintippen (oder per Sprache diktieren), ein OpenAI-Modell bewertet sie mit Feedback und einer Punktzahl (1–100); die Punktzahl steuert, wie oft die Karte noch drankommt. Rückfragen zum Feedback sind im Chat möglich. Optional — siehe Abschnitt „KI-Abfragemodus" unten.
+- **Multiple-Choice-Modus**: Aus drei Antworten die richtige auswählen. Eine richtige Wahl macht die Karte eine Stufe besser, eine falsche eine Stufe schlechter. Funktioniert ohne API-Key.
 - **Tages-Statistik**: heutige Abfragen, erledigte Karten, Lernzeit, Lern-Streak (🔥 ab 2 Tagen in Folge).
 - **14-Tage-Diagramm** und eine Liste aller Lerntage.
 - Funktioniert auf dem Handy (iPhone-optimiert) und am Computer.
@@ -81,6 +83,8 @@ git push -u origin main
    - **WICHTIG:** Ohne dieses Volume gehen alle Nutzer-Accounts und Statistiken bei jedem Deployment verloren.
 5. **Environment Variables setzen:**
    - `SESSION_SECRET` = ein zufälliger String mit mindestens 16 Zeichen (z. B. `openssl rand -hex 32`). Bei Änderung werden alle Nutzer ausgeloggt.
+   - `OPENAI_API_KEY` (optional) = API-Key für den KI-Abfragemodus. Ohne den Key ist nur dieser Modus deaktiviert, der Rest der App läuft normal.
+   - `OPENAI_MODEL` (optional) = Chat-Modell, Default `gpt-4o-mini`.
 6. „Deploy" klicken. Beim ersten Build dauert es ein paar Minuten.
 
 > Der Dockerfile-Pfad ist relativ zum Repo-Root. Die `COPY`-Anweisungen im Dockerfile sind so geschrieben, dass sie den `lernkarten-app/`-Unterordner aus dem Repo-Root holen. Eine `.dockerignore` liegt ebenfalls am Repo-Root und hält den Build-Kontext klein.
@@ -135,6 +139,34 @@ Alternative: GitHub-Repo erstellen, mit Vercel verbinden — jede Änderung wird
 
 ---
 
+## KI-Abfragemodus (OpenAI)
+
+Auf der Startseite gibt es neben „Lernen starten" den Punkt **„Antwort eingeben (mit KI-Feedback)"**. Statt sich selbst einzuschätzen, gibst du die Antwort hier aktiv ein:
+
+- **Antwort eintippen** — oder per **🎤 Diktieren** sprechen (Browser-Spracherkennung, am zuverlässigsten in Chrome; auf iOS Safari nicht überall verfügbar — dann erscheint der Button nicht).
+- **„Antwort prüfen"** schickt Frage, deine Antwort und die Musterlösung an ein OpenAI-Modell. Du bekommst ein **Feedback** und eine **Punktzahl von 1–100**.
+- Die Punktzahl wird auf die vier bekannten Stufen abgebildet (1–40 → „nicht gewusst", 41–65 → „wenig", 66–85 → „gut", 86–100 → „perfekt") und steuert wie gewohnt, wie oft die Karte noch drankommt. Statistik und Abschluss-Bildschirm funktionieren unverändert.
+- Zum Feedback kannst du im **Chat Rückfragen** stellen.
+
+Der Modus teilt sich Karten-Stapel und Fortschritt mit „Lernen starten" — du kannst beides mischen.
+
+**Einrichtung:** In der ENV-Variable `OPENAI_API_KEY` einen Key von <https://platform.openai.com/api-keys> hinterlegen, optional `OPENAI_MODEL` (Default `gpt-4o-mini`). Lokal: `.env.example` nach `.env.local` kopieren und ausfüllen. Ist kein Key gesetzt, bleibt der Button sichtbar, „Antwort prüfen" zeigt aber einen Hinweis statt einer Bewertung — der Rest der App ist nicht betroffen.
+
+> Hinweis: Anfragen an OpenAI laufen ausschließlich serverseitig; der API-Key gelangt nie in den Browser. Jede Bewertung und jede Chat-Rückfrage verursacht API-Kosten bei OpenAI.
+
+---
+
+## Multiple-Choice-Modus
+
+Auf der Startseite gibt es zusätzlich den Punkt **„Multiple Choice"**. Zu jeder Frage werden drei Antworten gezeigt — eine richtige und zwei falsche. Du wählst die richtige aus:
+
+- **Richtige Wahl** → die Karte wird **eine Stufe besser** (kommt seltener dran, bei „perfekt" fällt sie aus dem Stapel).
+- **Falsche Wahl** → die Karte wird **eine Stufe schlechter** (kommt häufiger dran). Die richtige Antwort wird danach grün markiert.
+
+Die falschen Antworten stammen aus einem kuratierten Pool in `data/distraktoren.json` — pro Karte mehrere plausible, aber falsche Optionen (verbreitete Verwechslungen). Im Quiz werden daraus jeweils zwei zufällig gezogen, sodass nicht immer dieselbe Auswahl erscheint. Dieser Modus braucht **keinen API-Key** und teilt sich Karten-Stapel und Fortschritt mit den anderen Lern-Modi.
+
+---
+
 ## Nutzer-Accounts (Multi-User-Modus)
 
 Wenn der Server läuft (lokal mit `npm run dev` oder per Docker mit gemountetem `/data`-Volume), kannst du Konten anlegen und vergleichen.
@@ -176,7 +208,7 @@ So kann man eine neue Session anfangen, ohne die ganze Lern-Statistik zu verlier
 
 ## Tests
 
-Die zentrale Lern- und Statistik-Logik ist mit 45 automatischen Tests abgesichert. Wer mag, kann sie selbst laufen lassen:
+Die zentrale Lern- und Statistik-Logik (inkl. KI-Score-Zuordnung) ist mit 74 automatischen Tests abgesichert. Wer mag, kann sie selbst laufen lassen:
 
 ```bash
 npm test
@@ -197,10 +229,12 @@ npm test
 
 ```
 lernkarten-app/
-├── app/                 # Seiten (Startseite, Lernen, Abschluss, Statistik)
-├── components/          # UI-Komponenten (Karte, Buttons, Diagramm, …)
-├── lib/                 # Logik (Algorithmus, Speicher, Statistik, Datum)
-│   └── __tests__/       # 45 Tests
+├── app/                 # Seiten (Startseite, Lernen, Abfrage, Abschluss, …)
+│   └── api/             # Server-Routen (Auth, Nutzer, KI-Bewertung & -Chat)
+├── components/          # UI-Komponenten (Karte, Buttons, Diagramm, KI-Feedback, …)
+├── lib/                 # Logik (Algorithmus, Speicher, Statistik, Datum, KI)
+│   ├── server/          # nur serverseitig (DB, Auth, OpenAI-Wrapper)
+│   └── __tests__/       # 74 Tests
 ├── data/lernkarten.json # die 61 Karten
 └── public/              # Manifest und Icons
 ```

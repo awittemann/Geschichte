@@ -125,3 +125,64 @@ export function verarbeiteBewertung(
 
   return { neuerFortschritt, wurdeErledigt };
 }
+
+/**
+ * Leitet aus einem `abfragenBisErledigt`-Wert eine passende Bewertungsstufe ab.
+ * Wird im Multiple-Choice-Modus genutzt, damit Statistik und `letzteBewertung`
+ * konsistent zum bestehenden 4-Stufen-Modell bleiben.
+ */
+export function bewertungFuerAbfragen(abfragenBisErledigt: number): Bewertung {
+  if (abfragenBisErledigt <= 0) return 'perfekt_gewusst';
+  if (abfragenBisErledigt <= 2) return 'gut_gewusst';
+  if (abfragenBisErledigt <= 3) return 'wenig_gewusst';
+  return 'nicht_gewusst';
+}
+
+/**
+ * Verarbeitet eine Multiple-Choice-Antwort.
+ * - Richtige Auswahl: Karte wird eine Stufe besser (`abfragenBisErledigt` − 1, min. 0).
+ * - Falsche Auswahl: Karte wird eine Stufe schlechter (`abfragenBisErledigt` + 1, max. 4).
+ *
+ * Liefert einen NEUEN Fortschritt (immutabel), die Info ob die Karte dadurch
+ * erledigt wurde (von >0 auf 0) sowie die abgeleitete Bewertungsstufe — damit
+ * der Aufrufer Statistik wie gewohnt mit `aktualisiereBewertung` führen kann.
+ */
+export function verarbeiteMultipleChoice(
+  f: Fortschritt,
+  kartenId: string,
+  richtig: boolean,
+): { neuerFortschritt: Fortschritt; wurdeErledigt: boolean; bewertung: Bewertung } {
+  const alt = f.karten[kartenId];
+  if (!alt) {
+    // Unbekannte ID — Fortschritt unverändert lassen.
+    return { neuerFortschritt: f, wurdeErledigt: false, bewertung: 'nicht_gewusst' };
+  }
+  const delta = richtig ? -1 : 1;
+  const neuerWert = Math.min(4, Math.max(0, alt.abfragenBisErledigt + delta));
+  const wurdeErledigt = alt.abfragenBisErledigt > 0 && neuerWert === 0;
+  const bewertung = bewertungFuerAbfragen(neuerWert);
+
+  const aktualisierteKarte: KartenStatus = {
+    ...alt,
+    letzteBewertung: bewertung,
+    abfragenBisErledigt: neuerWert,
+    anzahlAbfragen: alt.anzahlAbfragen + 1,
+  };
+
+  const neueErsteBewertungen = { ...f.ersteBewertungen };
+  if (!(kartenId in neueErsteBewertungen)) {
+    neueErsteBewertungen[kartenId] = bewertung;
+  }
+
+  const neuerFortschritt: Fortschritt = {
+    ...f,
+    karten: {
+      ...f.karten,
+      [kartenId]: aktualisierteKarte,
+    },
+    zuletztGezeigteId: kartenId,
+    ersteBewertungen: neueErsteBewertungen,
+  };
+
+  return { neuerFortschritt, wurdeErledigt, bewertung };
+}

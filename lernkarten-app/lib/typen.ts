@@ -9,6 +9,12 @@ export type KartenStatus = {
   letzteBewertung: Bewertung | null;
   abfragenBisErledigt: number;
   anzahlAbfragen: number;
+  /**
+   * Letzte KI-Score (1–100) aus dem Abfrage-Modus, falls die Karte dort
+   * schon einmal bewertet wurde. Optional — ältere gespeicherte Stände
+   * kennen das Feld nicht.
+   */
+  letzteKiScore?: number | null;
 };
 
 export type TagesStatistik = {
