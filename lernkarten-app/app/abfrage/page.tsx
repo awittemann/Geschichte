@@ -24,6 +24,7 @@ import {
 import { heutigesDatum } from '@/lib/datum';
 import { useIstClient } from '@/lib/sessionStats';
 import { apiKiBewerten, apiKiChat, type KiChatNachricht } from '@/lib/client/api';
+import { useSpracherkennungVerfuegbar } from '@/lib/client/spracherkennung';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import SpracheingabeButton from '@/components/SpracheingabeButton';
 import KiFeedback from '@/components/KiFeedback';
@@ -33,6 +34,7 @@ type Phase = 'eingabe' | 'pruefen' | 'feedback';
 export default function AbfrageSeite() {
   const router = useRouter();
   const istClient = useIstClient();
+  const spracheVerfuegbar = useSpracherkennungVerfuegbar();
 
   const [fortschritt, setFortschritt] = useState<Fortschritt | null>(() => {
     if (typeof window === 'undefined') return null;
@@ -259,8 +261,10 @@ export default function AbfrageSeite() {
                     setEingabe((e) => (e ? `${e} ${text}` : text))
                   }
                 />
-                <span className="text-xs text-slate-400">
-                  Sprache wird im Browser erkannt.
+                <span className="text-xs text-slate-500">
+                  {spracheVerfuegbar
+                    ? 'Sprache wird im Browser erkannt.'
+                    : 'Auf dem iPhone: ins Textfeld tippen und die 🎤-Taste der Tastatur zum Diktieren nutzen.'}
                 </span>
               </div>
               {fehler ? (

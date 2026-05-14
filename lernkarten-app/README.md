@@ -143,7 +143,7 @@ Alternative: GitHub-Repo erstellen, mit Vercel verbinden — jede Änderung wird
 
 Auf der Startseite gibt es neben „Lernen starten" den Punkt **„Antwort eingeben (mit KI-Feedback)"**. Statt sich selbst einzuschätzen, gibst du die Antwort hier aktiv ein:
 
-- **Antwort eintippen** — oder per **🎤 Diktieren** sprechen (Browser-Spracherkennung, am zuverlässigsten in Chrome; auf iOS Safari nicht überall verfügbar — dann erscheint der Button nicht).
+- **Antwort eintippen** — oder diktieren. Auf Chrome/Desktop gibt es dafür den **🎤-Diktieren**-Button (Browser-Spracherkennung). Auf dem **iPhone/iPad** ist die Web-Spracherkennung unzuverlässig — dort wird der Button ausgeblendet; stattdessen einfach ins Textfeld tippen und die **Mikrofon-Taste der iOS-Bildschirmtastatur** verwenden (zuverlässig und kostenlos).
 - **„Antwort prüfen"** schickt Frage, deine Antwort und die Musterlösung an ein OpenAI-Modell. Du bekommst ein **Feedback** und eine **Punktzahl von 1–100**.
 - Die Punktzahl wird auf die vier bekannten Stufen abgebildet (1–40 → „nicht gewusst", 41–65 → „wenig", 66–85 → „gut", 86–100 → „perfekt") und steuert wie gewohnt, wie oft die Karte noch drankommt. Statistik und Abschluss-Bildschirm funktionieren unverändert.
 - Zum Feedback kannst du im **Chat Rückfragen** stellen.

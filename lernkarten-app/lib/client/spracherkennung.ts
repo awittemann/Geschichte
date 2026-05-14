@@ -26,8 +26,24 @@ interface SpeechRecognitionInstanz {
 
 type SpeechRecognitionCtor = new () => SpeechRecognitionInstanz;
 
+/** Erkennt iOS-Geräte (inkl. iPadOS, das sich als „Macintosh" ausgibt). */
+function istIOS(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  if (/iP(hone|ad|od)/.test(ua)) return true;
+  return (
+    /Macintosh/.test(ua) &&
+    typeof document !== 'undefined' &&
+    'ontouchend' in document
+  );
+}
+
 function holeCtor(): SpeechRecognitionCtor | null {
   if (typeof window === 'undefined') return null;
+  // iOS-Browser nutzen alle WebKit: webkitSpeechRecognition ist dort zwar
+  // vorhanden, die Erkennung funktioniert aber nicht zuverlässig. Deshalb auf
+  // iOS gar nicht anbieten — die iOS-Bildschirmtastatur hat ein eigenes Diktat.
+  if (istIOS()) return null;
   const w = window as unknown as {
     SpeechRecognition?: SpeechRecognitionCtor;
     webkitSpeechRecognition?: SpeechRecognitionCtor;
@@ -53,6 +69,19 @@ export type Spracherkennung = {
   starten: () => void;
   stoppen: () => void;
 };
+
+/**
+ * Leichter Hook, der nur prüft, ob die In-App-Spracherkennung verfügbar ist —
+ * ohne einen Erkenner aufzubauen. Praktisch für UI, die abhängig davon einen
+ * Hinweis statt eines Buttons zeigen will (z. B. iOS-Tastatur-Diktat).
+ */
+export function useSpracherkennungVerfuegbar(): boolean {
+  return useSyncExternalStore(
+    leeresAbo,
+    unterstuetztClient,
+    unterstuetztServer,
+  );
+}
 
 export function useSpracherkennung({
   sprache = 'de-DE',
