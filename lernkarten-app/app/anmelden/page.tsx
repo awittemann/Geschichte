@@ -77,12 +77,16 @@ export default function AnmeldeSeite() {
     }
   }
 
-  // Wenn schon angemeldet, weiterleiten.
+  // Sobald eine Sitzung besteht — frisch eingeloggt/registriert oder schon
+  // angemeldet hergekommen — hart auf die Startseite wechseln. Ein harter
+  // Wechsel (statt router.replace) ist nötig, weil der Client-Cache von Next
+  // sonst die alte, von der Middleware auf /anmelden umgeleitete Antwort für
+  // „/" ausliefert und man auf der Anmeldeseite hängen bleibt.
   useEffect(() => {
     if (sitzung.status === 'bereit' && sitzung.nutzer !== null) {
-      router.replace('/');
+      window.location.replace('/');
     }
-  }, [sitzung, router]);
+  }, [sitzung]);
 
   async function abschicken(e: React.FormEvent) {
     e.preventDefault();
@@ -103,10 +107,11 @@ export default function AnmeldeSeite() {
           importiereLokaleDaten: importieren,
         });
       }
-      router.push('/');
+      // Die Weiterleitung auf die Startseite übernimmt der useEffect oben,
+      // sobald die Sitzung steht. `arbeitet` lassen wir bewusst true — der
+      // Button bleibt „Bitte warten…", bis der harte Seitenwechsel greift.
     } catch (err) {
       setFehler(err instanceof Error ? err.message : 'Unbekannter Fehler');
-    } finally {
       setArbeitet(false);
     }
   }
