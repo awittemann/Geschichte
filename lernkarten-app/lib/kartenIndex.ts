@@ -43,6 +43,21 @@ function baueIndex(daten: LernkartenDaten): KartenIndex {
 // Die Daten sind statisch — Index einmal beim Modulladen bauen, statt pro Mount.
 export const KARTEN_INDEX: KartenIndex = baueIndex(DATEN);
 
+/** Namen aller Kapitel in Quell-Reihenfolge. */
+export const ALLE_KATEGORIEN: string[] = DATEN.kategorien.map((k) => k.name);
+
+/**
+ * IDs aller Karten einer Kategorie in Quell-Reihenfolge. `null` liefert alle IDs.
+ * Wird vom Quiz-Modus genutzt, um den Algorithmus auf ein einzelnes Kapitel zu
+ * scopen, ohne den globalen Fortschritt zu ändern.
+ */
+export function reihenfolgeFuerKategorie(name: string | null): string[] {
+  if (!name) return KARTEN_INDEX.reihenfolge;
+  const kategorie = DATEN.kategorien.find((k) => k.name === name);
+  if (!kategorie) return KARTEN_INDEX.reihenfolge;
+  return kategorie.karten.map((k) => k.id);
+}
+
 /**
  * Lädt den Fortschritt aus localStorage oder initialisiert einen neuen.
  * Reaktiviert außerdem eine pausierte Session (sessionStart === null).

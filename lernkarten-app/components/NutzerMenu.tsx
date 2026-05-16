@@ -27,6 +27,14 @@ export default function NutzerMenu() {
   return (
     <div className="flex items-center gap-2 text-sm">
       <Link
+        href="/"
+        aria-label="Zur Startseite"
+        title="Startseite"
+        className="text-slate-600 hover:text-slate-900 px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+      >
+        🏠 Start
+      </Link>
+      <Link
         href="/nutzer"
         className="text-slate-600 hover:text-slate-900 px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
       >

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Fortschritt } from '@/lib/typen';
 import { initialisiereFortschrittAusDaten, speichereFortschritt } from '@/lib/speicher';
@@ -23,29 +23,41 @@ import {
 } from '@/lib/statistik';
 import { heutigesDatum } from '@/lib/datum';
 import { useIstClient } from '@/lib/sessionStats';
+import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
 import { apiKiBewerten, apiKiChat, type KiChatNachricht } from '@/lib/client/api';
 import { useSpracherkennungVerfuegbar } from '@/lib/client/spracherkennung';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import SpracheingabeButton from '@/components/SpracheingabeButton';
 import KiFeedback from '@/components/KiFeedback';
+import GefiltertFertigBanner from '@/components/GefiltertFertigBanner';
 
 type Phase = 'eingabe' | 'pruefen' | 'feedback';
 
 export default function AbfrageSeite() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto max-w-md safe-area-px safe-area-py w-full">
+          <div className="text-slate-500 text-center mt-8">Lädt…</div>
+        </main>
+      }
+    >
+      <AbfrageSeiteInner />
+    </Suspense>
+  );
+}
+
+function AbfrageSeiteInner() {
   const router = useRouter();
   const istClient = useIstClient();
   const spracheVerfuegbar = useSpracherkennungVerfuegbar();
+  const { kapitel, reihenfolge, erlaubteIds } = useKapitelFilter();
 
   const [fortschritt, setFortschritt] = useState<Fortschritt | null>(() => {
     if (typeof window === 'undefined') return null;
     return ladeOderInitFortschritt();
   });
-  const [aktuelleId, setAktuelleId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
-    const f = ladeOderInitFortschritt();
-    if (istSessionAbgeschlossen(f)) return null;
-    return waehleNaechsteKarte(f, INDEX.reihenfolge);
-  });
+  const [aktuelleId, setAktuelleId] = useState<string | null>(null);
 
   const [phase, setPhase] = useState<Phase>('eingabe');
   const [eingabe, setEingabe] = useState('');
@@ -58,11 +70,16 @@ export default function AbfrageSeite() {
   const [chatLaedt, setChatLaedt] = useState(false);
   const [chatFehler, setChatFehler] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
-  // Startzeitpunkt der aktuellen Karte; wird im Effekt unten gesetzt.
   const startZeitRef = useRef<number>(0);
 
-  // Karte als angesehen markieren und die Lernzeit-Messung neu starten,
-  // sobald eine andere Karte auf den Bildschirm kommt.
+  // Erste Karte wählen, sobald Client und Filter bereit sind.
+  useEffect(() => {
+    if (!istClient || !fortschritt) return;
+    if (aktuelleId !== null) return;
+    if (istSessionAbgeschlossen(fortschritt, erlaubteIds)) return;
+    setAktuelleId(waehleNaechsteKarte(fortschritt, reihenfolge));
+  }, [istClient, fortschritt, aktuelleId, reihenfolge, erlaubteIds]);
+
   useEffect(() => {
     if (aktuelleId) markiereKarteAngesehen(aktuelleId);
     startZeitRef.current = Date.now();
@@ -90,7 +107,6 @@ export default function AbfrageSeite() {
         aktuelleId,
         bewertung,
       );
-      // KI-Score zusätzlich im Kartenstatus festhalten.
       const karte = neuerFortschritt.karten[aktuelleId];
       const mitScore: Fortschritt = {
         ...neuerFortschritt,
@@ -117,11 +133,14 @@ export default function AbfrageSeite() {
 
   const onNaechste = useCallback(() => {
     if (!fortschritt) return;
-    if (istSessionAbgeschlossen(fortschritt)) {
-      router.push('/abschluss');
+    if (istSessionAbgeschlossen(fortschritt, erlaubteIds)) {
+      setAktuelleId(null);
+      if (!kapitel) {
+        router.push('/abschluss');
+      }
       return;
     }
-    const naechste = waehleNaechsteKarte(fortschritt, INDEX.reihenfolge);
+    const naechste = waehleNaechsteKarte(fortschritt, reihenfolge);
     setAktuelleId(naechste);
     setEingabe('');
     setKiErgebnis(null);
@@ -130,13 +149,13 @@ export default function AbfrageSeite() {
     setFehler(null);
     setPhase('eingabe');
     setAnimKey((k) => k + 1);
-  }, [fortschritt, router]);
+  }, [fortschritt, router, reihenfolge, erlaubteIds, kapitel]);
 
   const onNeueSession = useCallback(() => {
     const f = initialisiereFortschrittAusDaten(DATEN);
     speichereFortschritt(f);
     setFortschritt(f);
-    setAktuelleId(waehleNaechsteKarte(f, INDEX.reihenfolge));
+    setAktuelleId(waehleNaechsteKarte(f, reihenfolge));
     setEingabe('');
     setKiErgebnis(null);
     setChat([]);
@@ -144,13 +163,12 @@ export default function AbfrageSeite() {
     setFehler(null);
     setPhase('eingabe');
     setAnimKey((k) => k + 1);
-  }, []);
+  }, [reihenfolge]);
 
   const onFrage = useCallback(
     async (text: string) => {
       if (!aktuelleId || !kiErgebnis) return;
       setChatFehler(null);
-      // Verlauf für die API: Feedback als erste assistent-Nachricht voranstellen.
       const verlauf: KiChatNachricht[] = [
         { rolle: 'assistent', text: kiErgebnis.feedback },
         ...chat,
@@ -180,11 +198,17 @@ export default function AbfrageSeite() {
     );
   }
 
+  const gesamt = kapitel ? reihenfolge.length : INDEX.gesamt;
   const offen = Object.values(fortschritt.karten).filter(
-    (k) => k.abfragenBisErledigt > 0,
+    (k) =>
+      k.abfragenBisErledigt > 0 && (!erlaubteIds || erlaubteIds.has(k.id)),
   ).length;
-  const erledigt = INDEX.gesamt - offen;
+  const erledigt = gesamt - offen;
   const karteDaten = aktuelleId ? INDEX.byId.get(aktuelleId) : null;
+  const gefiltertFertig =
+    kapitel !== null &&
+    aktuelleId === null &&
+    istSessionAbgeschlossen(fortschritt, erlaubteIds);
 
   return (
     <main className="mx-auto max-w-md safe-area-px safe-area-py w-full flex flex-col gap-4">
@@ -198,14 +222,21 @@ export default function AbfrageSeite() {
           ← Zurück
         </button>
         <div className="flex-1 min-w-0">
-          <Fortschrittsbalken aktuell={erledigt} gesamt={INDEX.gesamt} kompakt />
+          <Fortschrittsbalken aktuell={erledigt} gesamt={gesamt} kompakt />
           <div className="text-xs text-slate-500 mt-1 text-center">
             Noch {offen} {offen === 1 ? 'Karte' : 'Karten'}
+            {kapitel ? ` · ${kapitel}` : ''}
           </div>
         </div>
       </div>
 
-      {karteDaten ? (
+      {gefiltertFertig ? (
+        <GefiltertFertigBanner
+          kapitel={kapitel}
+          modusPfad="/abfrage"
+          onFilterEntfernt={() => setAktuelleId(null)}
+        />
+      ) : karteDaten ? (
         <div key={`${aktuelleId}-${animKey}`} className="anim-slide-in flex flex-col gap-4">
           <div className="text-xs text-slate-500 text-right">
             {karteDaten.kategorie}
