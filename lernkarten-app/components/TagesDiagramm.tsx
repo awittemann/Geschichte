@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { TagesStatistik } from '@/lib/typen';
 import { formatiereDatum, heutigesDatum, wochentagKurz } from '@/lib/datum';
 
@@ -15,8 +15,19 @@ type Props = {
  * - Tap auf Balken: zeigt unterhalb des Diagramms einen Detail-Bereich.
  */
 export default function TagesDiagramm({ tage }: Props) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const heute = heutigesDatum();
+  // Default-Auswahl: heutiger Tag, sonst der letzte aktive Tag.
+  const initialIndex = useMemo(() => {
+    const heuteIdx = tage.findIndex((t) => t.datum === heute);
+    if (heuteIdx >= 0) return heuteIdx;
+    for (let i = tage.length - 1; i >= 0; i -= 1) {
+      if (tage[i].abfragenGesamt > 0) return i;
+    }
+    return null;
+  }, [tage, heute]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    initialIndex,
+  );
   const max = tage.reduce(
     (acc, t) => (t.abfragenGesamt > acc ? t.abfragenGesamt : acc),
     0,
@@ -31,7 +42,7 @@ export default function TagesDiagramm({ tage }: Props) {
       <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">
         Letzte 14 Tage
       </h2>
-      <div className="flex items-end gap-1 h-32">
+      <div className="flex items-stretch gap-1 h-32">
         {tage.map((t, i) => {
           const istHeute = t.datum === heute;
           const aktiv = t.abfragenGesamt > 0;
@@ -49,24 +60,22 @@ export default function TagesDiagramm({ tage }: Props) {
               }
               aria-label={`${formatiereDatum(t.datum)}: ${t.abfragenGesamt} Abfragen`}
               aria-pressed={istSelektiert}
-              className="flex-1 flex flex-col items-center justify-end gap-1 group focus:outline-none"
+              className="flex-1 h-full flex flex-col justify-end items-center group focus:outline-none"
             >
-              <div className="w-full h-full flex flex-col justify-end items-center">
-                {aktiv ? (
-                  <div
-                    className={`w-full rounded-t ${farbe} ${
-                      istSelektiert ? 'ring-2 ring-blue-900' : ''
-                    } transition-all`}
-                    style={{ height: `${angezeigteHoehe}%` }}
-                  />
-                ) : (
-                  <div
-                    className={`w-full h-1 ${
-                      istSelektiert ? 'bg-slate-400' : 'bg-slate-200'
-                    } rounded`}
-                  />
-                )}
-              </div>
+              {aktiv ? (
+                <div
+                  className={`w-full rounded-t ${farbe} ${
+                    istSelektiert ? 'ring-2 ring-blue-900' : ''
+                  } transition-all`}
+                  style={{ height: `${angezeigteHoehe}%` }}
+                />
+              ) : (
+                <div
+                  className={`w-full h-1 ${
+                    istSelektiert ? 'bg-slate-400' : 'bg-slate-200'
+                  } rounded`}
+                />
+              )}
             </button>
           );
         })}
