@@ -241,7 +241,7 @@ function VerlaufTab({
           unten={streak >= 2 ? '🔥 Tage' : 'Tage'}
         />
         <UebersichtsKarte
-          titel="Gesamt"
+          titel="Lerntage"
           haupt={String(lerntageGesamt)}
           unten={`${abfragenGesamt} Abfragen`}
         />
