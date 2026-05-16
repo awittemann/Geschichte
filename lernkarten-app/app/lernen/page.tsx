@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Bewertung, Fortschritt } from '@/lib/typen';
 import {
@@ -27,29 +27,47 @@ import { heutigesDatum } from '@/lib/datum';
 import Karte from '@/components/Karte';
 import BewertungButtons from '@/components/BewertungButtons';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
+import GefiltertFertigBanner from '@/components/GefiltertFertigBanner';
 import { useIstClient } from '@/lib/sessionStats';
+import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
 
 export default function LernenSeite() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto max-w-md safe-area-px safe-area-py w-full">
+          <div className="text-slate-500 text-center mt-8">Lädt…</div>
+        </main>
+      }
+    >
+      <LernenSeiteInner />
+    </Suspense>
+  );
+}
+
+function LernenSeiteInner() {
   const router = useRouter();
   const istClient = useIstClient();
-  // Lazy-Init: nur auf dem Client, sonst null (Server hat keinen localStorage).
+  const { kapitel, reihenfolge, erlaubteIds } = useKapitelFilter();
+
   const [fortschritt, setFortschritt] = useState<Fortschritt | null>(() => {
     if (typeof window === 'undefined') return null;
     return ladeOderInitFortschritt();
   });
-  const [aktuelleId, setAktuelleId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
-    const f = ladeOderInitFortschritt();
-    if (istSessionAbgeschlossen(f)) return null;
-    return waehleNaechsteKarte(f, INDEX.reihenfolge);
-  });
+  const [aktuelleId, setAktuelleId] = useState<string | null>(null);
   const [antwortSichtbar, setAntwortSichtbar] = useState(false);
   const [animKey, setAnimKey] = useState(0);
   const aufdeckZeitRef = useRef<number | null>(null);
 
-  const index = INDEX;
+  // Erste Karte wählen, sobald Client und Filter bereit sind.
+  useEffect(() => {
+    if (!istClient || !fortschritt) return;
+    if (aktuelleId !== null) return;
+    if (istSessionAbgeschlossen(fortschritt, erlaubteIds)) return;
+    setAktuelleId(waehleNaechsteKarte(fortschritt, reihenfolge));
+  }, [istClient, fortschritt, aktuelleId, reihenfolge, erlaubteIds]);
 
-  // Markiere die aktuelle Karte als angesehen, sobald sie auf den Bildschirm kommt.
+  // Karte als angesehen markieren, sobald sie auf den Bildschirm kommt.
   useEffect(() => {
     if (aktuelleId) markiereKarteAngesehen(aktuelleId);
   }, [aktuelleId]);
@@ -78,31 +96,34 @@ export default function LernenSeite() {
       setzeErstenLerntagFallsNoetig(heute);
       speichereFortschritt(neuerFortschritt);
 
-      if (istSessionAbgeschlossen(neuerFortschritt)) {
+      if (istSessionAbgeschlossen(neuerFortschritt, erlaubteIds)) {
         setFortschritt(neuerFortschritt);
-        router.push('/abschluss');
+        setAktuelleId(null);
+        if (!kapitel) {
+          router.push('/abschluss');
+        }
         return;
       }
-      const naechste = waehleNaechsteKarte(neuerFortschritt, INDEX.reihenfolge);
+      const naechste = waehleNaechsteKarte(neuerFortschritt, reihenfolge);
       setFortschritt(neuerFortschritt);
       setAktuelleId(naechste);
       setAntwortSichtbar(false);
       aufdeckZeitRef.current = null;
       setAnimKey((k) => k + 1);
     },
-    [fortschritt, aktuelleId, router],
+    [fortschritt, aktuelleId, router, reihenfolge, erlaubteIds, kapitel],
   );
 
   const onNeueSession = useCallback(() => {
     const f = initialisiereFortschrittAusDaten(DATEN);
     speichereFortschritt(f);
-    const naechste = waehleNaechsteKarte(f, INDEX.reihenfolge);
+    const naechste = waehleNaechsteKarte(f, reihenfolge);
     setFortschritt(f);
     setAktuelleId(naechste);
     setAntwortSichtbar(false);
     aufdeckZeitRef.current = null;
     setAnimKey((k) => k + 1);
-  }, []);
+  }, [reihenfolge]);
 
   if (!istClient || !fortschritt) {
     return (
@@ -112,11 +133,17 @@ export default function LernenSeite() {
     );
   }
 
+  const gesamt = kapitel ? reihenfolge.length : INDEX.gesamt;
   const offen = Object.values(fortschritt.karten).filter(
-    (k) => k.abfragenBisErledigt > 0,
+    (k) =>
+      k.abfragenBisErledigt > 0 && (!erlaubteIds || erlaubteIds.has(k.id)),
   ).length;
-  const erledigt = index.gesamt - offen;
-  const karteDaten = aktuelleId ? index.byId.get(aktuelleId) : null;
+  const erledigt = gesamt - offen;
+  const karteDaten = aktuelleId ? INDEX.byId.get(aktuelleId) : null;
+  const gefiltertFertig =
+    kapitel !== null &&
+    aktuelleId === null &&
+    istSessionAbgeschlossen(fortschritt, erlaubteIds);
 
   return (
     <main className="mx-auto max-w-md safe-area-px safe-area-py w-full flex flex-col gap-4">
@@ -130,18 +157,21 @@ export default function LernenSeite() {
           ← Zurück
         </button>
         <div className="flex-1 min-w-0">
-          <Fortschrittsbalken
-            aktuell={erledigt}
-            gesamt={index.gesamt}
-            kompakt
-          />
+          <Fortschrittsbalken aktuell={erledigt} gesamt={gesamt} kompakt />
           <div className="text-xs text-slate-500 mt-1 text-center">
             Noch {offen} {offen === 1 ? 'Karte' : 'Karten'}
+            {kapitel ? ` · ${kapitel}` : ''}
           </div>
         </div>
       </div>
 
-      {karteDaten ? (
+      {gefiltertFertig ? (
+        <GefiltertFertigBanner
+          kapitel={kapitel}
+          modusPfad="/lernen"
+          onFilterEntfernt={() => setAktuelleId(null)}
+        />
+      ) : karteDaten ? (
         <>
           <div className="text-xs text-slate-500 text-right">
             {karteDaten.kategorie}

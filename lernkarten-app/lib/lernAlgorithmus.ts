@@ -16,27 +16,46 @@ export const BEWERTUNG_ZU_ABFRAGEN: Record<Bewertung, number> = {
 
 /**
  * Alle Karten, die noch mindestens einmal abgefragt werden müssen.
+ * Mit optionalem `erlaubteIds`-Set werden nur Karten dieser Teilmenge berücksichtigt.
  */
-export function offeneKarten(f: Fortschritt): KartenStatus[] {
-  return Object.values(f.karten).filter((k) => k.abfragenBisErledigt > 0);
+export function offeneKarten(
+  f: Fortschritt,
+  erlaubteIds?: Set<string>,
+): KartenStatus[] {
+  return Object.values(f.karten).filter(
+    (k) =>
+      k.abfragenBisErledigt > 0 && (!erlaubteIds || erlaubteIds.has(k.id)),
+  );
 }
 
 /**
  * Session ist abgeschlossen, sobald alle Karten 0 erreicht haben.
  * Bei leerem Stapel (keine Karten) ist die Session per Definition NICHT abgeschlossen,
- * weil noch nichts initialisiert wurde.
+ * weil noch nichts initialisiert wurde. Mit `erlaubteIds` scoped auf eine Teilmenge.
  */
-export function istSessionAbgeschlossen(f: Fortschritt): boolean {
-  const werte = Object.values(f.karten);
+export function istSessionAbgeschlossen(
+  f: Fortschritt,
+  erlaubteIds?: Set<string>,
+): boolean {
+  const werte = erlaubteIds
+    ? Object.values(f.karten).filter((k) => erlaubteIds.has(k.id))
+    : Object.values(f.karten);
   if (werte.length === 0) return false;
   return werte.every((k) => k.abfragenBisErledigt === 0);
 }
 
 /**
  * Anzahl Karten, die bereits erledigt (abfragenBisErledigt === 0) sind.
+ * Mit `erlaubteIds` scoped auf eine Teilmenge.
  */
-export function anzahlErledigt(f: Fortschritt): number {
-  return Object.values(f.karten).filter((k) => k.abfragenBisErledigt === 0).length;
+export function anzahlErledigt(
+  f: Fortschritt,
+  erlaubteIds?: Set<string>,
+): number {
+  return Object.values(f.karten).filter(
+    (k) =>
+      k.abfragenBisErledigt === 0 && (!erlaubteIds || erlaubteIds.has(k.id)),
+  ).length;
 }
 
 /**
@@ -66,8 +85,11 @@ export function waehleNaechsteKarte(
       return id;
     }
   }
-  // Phase 2: zufällige Auswahl aus den noch offenen Karten.
-  const offen = offeneKarten(f);
+  // Phase 2: zufällige Auswahl aus den noch offenen Karten. Wenn eine
+  // Reihenfolge übergeben wurde, wird auf genau diese Teilmenge eingeschränkt
+  // (relevant für Kapitel-Filter); ohne Reihenfolge bleibt das alte Verhalten.
+  const erlaubt = reihenfolge.length > 0 ? new Set(reihenfolge) : undefined;
+  const offen = offeneKarten(f, erlaubt);
   if (offen.length === 0) return null;
   let kandidaten = offen;
   if (f.zuletztGezeigteId !== null && offen.length > 1) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Fortschritt } from '@/lib/typen';
 import { initialisiereFortschrittAusDaten, speichereFortschritt } from '@/lib/speicher';
@@ -23,13 +23,14 @@ import {
 } from '@/lib/statistik';
 import { heutigesDatum } from '@/lib/datum';
 import { useIstClient } from '@/lib/sessionStats';
+import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
+import GefiltertFertigBanner from '@/components/GefiltertFertigBanner';
 import distraktorenDaten from '@/data/distraktoren.json';
 
 const POOL = (distraktorenDaten as { distraktoren: Record<string, string[]> })
   .distraktoren;
 
-/** Distraktoren-Pool einer Karte (kann leer sein). */
 function holePool(id: string): string[] {
   return POOL[id] ?? [];
 }
@@ -52,8 +53,8 @@ type Aktuell = {
   optionen: MCOption[];
 } | null;
 
-function baueAktuell(f: Fortschritt): Aktuell {
-  const id = waehleNaechsteKarte(f, INDEX.reihenfolge);
+function baueAktuell(f: Fortschritt, reihenfolge: string[]): Aktuell {
+  const id = waehleNaechsteKarte(f, reihenfolge);
   if (!id) return null;
   const karte = INDEX.byId.get(id);
   if (!karte) return null;
@@ -66,26 +67,41 @@ function baueAktuell(f: Fortschritt): Aktuell {
 }
 
 export default function MultipleChoiceSeite() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto max-w-md safe-area-px safe-area-py w-full">
+          <div className="text-slate-500 text-center mt-8">Lädt…</div>
+        </main>
+      }
+    >
+      <MultipleChoiceSeiteInner />
+    </Suspense>
+  );
+}
+
+function MultipleChoiceSeiteInner() {
   const router = useRouter();
   const istClient = useIstClient();
+  const { kapitel, reihenfolge, erlaubteIds } = useKapitelFilter();
 
   const [fortschritt, setFortschritt] = useState<Fortschritt | null>(() => {
     if (typeof window === 'undefined') return null;
     return ladeOderInitFortschritt();
   });
-  const [aktuell, setAktuell] = useState<Aktuell>(() => {
-    if (typeof window === 'undefined') return null;
-    const f = ladeOderInitFortschritt();
-    if (istSessionAbgeschlossen(f)) return null;
-    return baueAktuell(f);
-  });
-  // Index der gewählten Option; null = noch nicht beantwortet.
+  const [aktuell, setAktuell] = useState<Aktuell>(null);
   const [gewaehlt, setGewaehlt] = useState<number | null>(null);
   const [animKey, setAnimKey] = useState(0);
   const startZeitRef = useRef<number>(0);
 
-  // Karte als angesehen markieren und Lernzeit-Messung neu starten,
-  // sobald eine andere Karte erscheint.
+  // Erste Karte erzeugen, sobald Client und Filter bereit sind.
+  useEffect(() => {
+    if (!istClient || !fortschritt) return;
+    if (aktuell !== null) return;
+    if (istSessionAbgeschlossen(fortschritt, erlaubteIds)) return;
+    setAktuell(baueAktuell(fortschritt, reihenfolge));
+  }, [istClient, fortschritt, aktuell, reihenfolge, erlaubteIds]);
+
   useEffect(() => {
     if (aktuell) markiereKarteAngesehen(aktuell.id);
     startZeitRef.current = Date.now();
@@ -114,23 +130,26 @@ export default function MultipleChoiceSeite() {
 
   const onNaechste = useCallback(() => {
     if (!fortschritt) return;
-    if (istSessionAbgeschlossen(fortschritt)) {
-      router.push('/abschluss');
+    if (istSessionAbgeschlossen(fortschritt, erlaubteIds)) {
+      setAktuell(null);
+      if (!kapitel) {
+        router.push('/abschluss');
+      }
       return;
     }
-    setAktuell(baueAktuell(fortschritt));
+    setAktuell(baueAktuell(fortschritt, reihenfolge));
     setGewaehlt(null);
     setAnimKey((k) => k + 1);
-  }, [fortschritt, router]);
+  }, [fortschritt, router, reihenfolge, erlaubteIds, kapitel]);
 
   const onNeueSession = useCallback(() => {
     const f = initialisiereFortschrittAusDaten(DATEN);
     speichereFortschritt(f);
     setFortschritt(f);
-    setAktuell(baueAktuell(f));
+    setAktuell(baueAktuell(f, reihenfolge));
     setGewaehlt(null);
     setAnimKey((k) => k + 1);
-  }, []);
+  }, [reihenfolge]);
 
   if (!istClient || !fortschritt) {
     return (
@@ -140,13 +159,19 @@ export default function MultipleChoiceSeite() {
     );
   }
 
+  const gesamt = kapitel ? reihenfolge.length : INDEX.gesamt;
   const offen = Object.values(fortschritt.karten).filter(
-    (k) => k.abfragenBisErledigt > 0,
+    (k) =>
+      k.abfragenBisErledigt > 0 && (!erlaubteIds || erlaubteIds.has(k.id)),
   ).length;
-  const erledigt = INDEX.gesamt - offen;
+  const erledigt = gesamt - offen;
   const beantwortet = gewaehlt !== null;
   const richtigGewaehlt =
     beantwortet && aktuell?.optionen[gewaehlt]?.istRichtig === true;
+  const gefiltertFertig =
+    kapitel !== null &&
+    aktuell === null &&
+    istSessionAbgeschlossen(fortschritt, erlaubteIds);
 
   return (
     <main className="mx-auto max-w-md safe-area-px safe-area-py w-full flex flex-col gap-4">
@@ -160,14 +185,21 @@ export default function MultipleChoiceSeite() {
           ← Zurück
         </button>
         <div className="flex-1 min-w-0">
-          <Fortschrittsbalken aktuell={erledigt} gesamt={INDEX.gesamt} kompakt />
+          <Fortschrittsbalken aktuell={erledigt} gesamt={gesamt} kompakt />
           <div className="text-xs text-slate-500 mt-1 text-center">
             Noch {offen} {offen === 1 ? 'Karte' : 'Karten'}
+            {kapitel ? ` · ${kapitel}` : ''}
           </div>
         </div>
       </div>
 
-      {aktuell ? (
+      {gefiltertFertig ? (
+        <GefiltertFertigBanner
+          kapitel={kapitel}
+          modusPfad="/multiple-choice"
+          onFilterEntfernt={() => setAktuell(null)}
+        />
+      ) : aktuell ? (
         <div
           key={`${aktuell.id}-${animKey}`}
           className="anim-slide-in flex flex-col gap-4"

@@ -132,17 +132,10 @@ export default function Startseite() {
       <div className="flex flex-col gap-2 mt-2">
         <button
           type="button"
-          onClick={() => router.push('/abfrage')}
+          onClick={() => router.push('/start')}
           className="w-full rounded-xl bg-slate-200 hover:bg-slate-300 active:bg-slate-400 text-slate-900 font-medium py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
         >
-          Antwort eingeben (mit KI-Feedback)
-        </button>
-        <button
-          type="button"
-          onClick={() => router.push('/multiple-choice')}
-          className="w-full rounded-xl bg-slate-200 hover:bg-slate-300 active:bg-slate-400 text-slate-900 font-medium py-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
-        >
-          Multiple Choice
+          Quiz starten (Modus &amp; Kapitel wählen)
         </button>
         <button
           type="button"
