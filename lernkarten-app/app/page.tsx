@@ -22,6 +22,10 @@ import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import TagesUebersicht from '@/components/TagesUebersicht';
 import PrivateModeWarnung from '@/components/PrivateModeWarnung';
 import { sessionHatAktivitaet, useIstClient } from '@/lib/sessionStats';
+import {
+  ladeKapitelFilter,
+  ladeLetztenModus,
+} from '@/lib/filterSpeicher';
 
 const DATEN = lernkartenDaten as LernkartenDaten;
 const KARTEN_GESAMT = DATEN.kategorien.reduce(
@@ -70,7 +74,12 @@ export default function Startseite() {
 
   const onStart = useCallback(() => {
     erhoeheSessionsZaehler(heutigesDatum());
-    router.push('/lernen');
+    const modus = ladeLetztenModus() ?? 'lernen';
+    const kapitel = ladeKapitelFilter();
+    const url = kapitel
+      ? `/${modus}?kapitel=${encodeURIComponent(kapitel)}`
+      : `/${modus}`;
+    router.push(url);
   }, [router]);
 
   const onReset = useCallback(() => {

@@ -30,6 +30,7 @@ import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import GefiltertFertigBanner from '@/components/GefiltertFertigBanner';
 import { useIstClient } from '@/lib/sessionStats';
 import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
+import { speichereLetztenModus } from '@/lib/filterSpeicher';
 
 export default function LernenSeite() {
   return (
@@ -58,6 +59,12 @@ function LernenSeiteInner() {
   const [antwortSichtbar, setAntwortSichtbar] = useState(false);
   const [animKey, setAnimKey] = useState(0);
   const aufdeckZeitRef = useRef<number | null>(null);
+
+  // Modus für "Weiter lernen" auf der Startseite merken.
+  useEffect(() => {
+    if (!istClient) return;
+    speichereLetztenModus('lernen');
+  }, [istClient]);
 
   // Erste Karte wählen, sobald Client und Filter bereit sind.
   useEffect(() => {

@@ -24,6 +24,7 @@ import {
 import { heutigesDatum } from '@/lib/datum';
 import { useIstClient } from '@/lib/sessionStats';
 import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
+import { speichereLetztenModus } from '@/lib/filterSpeicher';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
 import GefiltertFertigBanner from '@/components/GefiltertFertigBanner';
 import distraktorenDaten from '@/data/distraktoren.json';
@@ -93,6 +94,12 @@ function MultipleChoiceSeiteInner() {
   const [gewaehlt, setGewaehlt] = useState<number | null>(null);
   const [animKey, setAnimKey] = useState(0);
   const startZeitRef = useRef<number>(0);
+
+  // Modus für "Weiter lernen" auf der Startseite merken.
+  useEffect(() => {
+    if (!istClient) return;
+    speichereLetztenModus('multiple-choice');
+  }, [istClient]);
 
   // Erste Karte erzeugen, sobald Client und Filter bereit sind.
   useEffect(() => {

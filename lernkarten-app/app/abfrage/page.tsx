@@ -24,6 +24,7 @@ import {
 import { heutigesDatum } from '@/lib/datum';
 import { useIstClient } from '@/lib/sessionStats';
 import { useKapitelFilter } from '@/lib/client/useKapitelFilter';
+import { speichereLetztenModus } from '@/lib/filterSpeicher';
 import { apiKiBewerten, apiKiChat, type KiChatNachricht } from '@/lib/client/api';
 import { useSpracherkennungVerfuegbar } from '@/lib/client/spracherkennung';
 import Fortschrittsbalken from '@/components/Fortschrittsbalken';
@@ -71,6 +72,12 @@ function AbfrageSeiteInner() {
   const [chatFehler, setChatFehler] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
   const startZeitRef = useRef<number>(0);
+
+  // Modus für "Weiter lernen" auf der Startseite merken.
+  useEffect(() => {
+    if (!istClient) return;
+    speichereLetztenModus('abfrage');
+  }, [istClient]);
 
   // Erste Karte wählen, sobald Client und Filter bereit sind.
   useEffect(() => {
