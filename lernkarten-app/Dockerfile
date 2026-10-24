@@ -11,7 +11,8 @@
 # Lokal aus dem Repo-Root bauen:
 #   docker build -f lernkarten-app/Dockerfile -t lernkarten-app .
 
-ARG NODE_VERSION=22-alpine
+# Sicherheits-Update Node2Shell (CVE-2026-111497, Brotli): mindestens Node 22.23.4
+ARG NODE_VERSION=22.23.4-alpine
 
 # ---- Stage 1: Dependencies ----
 FROM node:${NODE_VERSION} AS deps
